@@ -35,7 +35,7 @@ export function DownloadSection() {
             id="download-heading"
             className="mt-4 font-wordmark text-4xl leading-[1.02] tracking-tight text-balance text-ink uppercase sm:text-6xl"
           >
-            Get CORDOVA RISKQ.
+            Get CORDOVA RISKQ
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted">
             The official CORDOVA RISKQ Android app. Install it before you need it.

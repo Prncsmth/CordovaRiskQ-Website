@@ -37,7 +37,7 @@ export function AppGuideSection() {
     <Section
       id="guide"
       eyebrow="App guide"
-      title="How to use CORDOVA RISKQ."
+      title="How to use CORDOVA RISKQ"
       intro="A quick tour of the screens you'll use most — what each one is for and how to use it."
     >
       <Reveal>

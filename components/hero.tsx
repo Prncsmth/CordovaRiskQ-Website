@@ -35,7 +35,7 @@ export function Hero() {
             className="animate-rise mt-6 font-wordmark text-[min(2.6rem,10vw)] leading-[0.98] tracking-tight text-balance text-ink uppercase sm:text-[min(3.75rem,calc(8vh+1.25rem))] lg:text-[min(4rem,5.4vw)]"
             style={rise(80)}
           >
-            Emergency Assistance. <span className="text-brand">Better Coordination.</span>
+            Emergency Assistance <span className="text-brand">Better Coordination.</span>
           </h1>
 
           <p

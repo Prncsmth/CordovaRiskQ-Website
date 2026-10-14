@@ -12,7 +12,7 @@ export function ShowcaseSection() {
     <Section
       id="showcase"
       eyebrow="Showcase"
-      title="Everything you need when it matters."
+      title="Everything you need when it matters"
       intro="Pick a feature to see what it does, what it shares, and where to find it in the app."
     >
       <Reveal>
@@ -102,7 +102,7 @@ export function UseCasesSection() {
   return (
     <Section
       eyebrow="When to use it"
-      title="Built for the situations you face."
+      title="Built for the situations you face"
       intro="From floods in coastal barangays to road accidents on the way home — here is how the app fits in."
       className="bg-surface"
     >
