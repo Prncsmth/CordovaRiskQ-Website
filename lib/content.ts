@@ -8,6 +8,7 @@ import type { LucideIcon } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import { APK_RELEASE } from "@/lib/release";
 import shotAddPhoto from "@/public/brand/addphoto.jpg";
+import shotAnnouncement from "@/public/brand/announcement.jpg";
 import shotConfirmation from "@/public/brand/confirmation.jpg";
 import shotSupport from "@/public/brand/contactsupport.jpg";
 import shotFaq from "@/public/brand/faqss.jpg";
@@ -18,6 +19,7 @@ import shotReport from "@/public/brand/report.jpg";
 import shotRoute from "@/public/brand/route.jpg";
 import shotSettings from "@/public/brand/settings.jpg";
 import shotSos from "@/public/brand/sos.jpg";
+import shotTrackResponder from "@/public/brand/track-responder.jpg";
 import shotViewRoute from "@/public/brand/viewroute.jpg";
 import {
   Ambulance,
@@ -267,6 +269,14 @@ export const SHOWCASE: readonly ShowcaseItem[] = [
     ],
     path: ["SOS screen or Report History", "Track Responder"],
     note: "Tracking appears only for your own SOS or report, once it has been accepted.",
+    media: {
+      kind: "video",
+      src: "/brand/trackresponder.mp4",
+      poster: "/brand/posters/trackresponder.jpg",
+      width: 1072,
+      height: 2276,
+      caption: "Tracking a responder on the way",
+    },
   },
   {
     id: "history",
@@ -283,6 +293,7 @@ export const SHOWCASE: readonly ShowcaseItem[] = [
     ],
     path: ["Report History", "Open a report"],
     note: "Turn push notifications on or off any time in Profile › Settings.",
+    media: { kind: "image", image: shotHistory, caption: "Report History" },
   },
 ];
 
@@ -398,7 +409,7 @@ export const FEATURES: readonly Feature[] = [
     title: "Track your responder",
     description:
       "Once a responder accepts your SOS or report, see them on the map with an estimated arrival time and a button to call them.",
-    image: shotSos,
+    image: shotTrackResponder,
   },
   {
     icon: ClipboardList,
@@ -409,10 +420,10 @@ export const FEATURES: readonly Feature[] = [
   },
   {
     icon: Bell,
-    title: "Alerts and updates",
+    title: "Announcements and alerts",
     description:
-      "Receive updates on your reports, tide-level updates, safety tips and alerts about incidents near you.",
-    image: shotSettings,
+      "See official announcements, like weather warnings, right on your Home screen, plus updates on your reports, tide-level updates and alerts about incidents near you.",
+    image: shotAnnouncement,
   },
   {
     icon: LifeBuoy,

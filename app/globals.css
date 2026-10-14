@@ -283,8 +283,8 @@ body {
       opacity 700ms var(--ease-out-soft),
       transform 700ms var(--ease-out-soft);
     transition-delay: var(--reveal-delay, 0ms);
-    /* Safety net: if scripts never hydrate, content still appears. */
-    animation: reveal-fallback 1ms linear 2.5s forwards;
+    /* Safety net for when scripts never run; Reveal cancels it on mount. */
+    animation: reveal-fallback 1ms linear 4s forwards;
   }
 
   [data-reveal][data-visible] {
@@ -300,7 +300,7 @@ body {
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 900ms var(--ease-out-soft);
-    animation: reveal-fallback 1ms linear 2.5s forwards;
+    animation: reveal-fallback 1ms linear 4s forwards;
   }
 
   .eyebrow-line {
@@ -319,7 +319,7 @@ body {
       transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
       opacity 260ms ease-out;
     transition-delay: calc(var(--reveal-delay, 0ms) + 180ms);
-    animation: reveal-fallback 1ms linear 2.5s forwards;
+    animation: reveal-fallback 1ms linear 4s forwards;
   }
 
   [data-visible] .eyebrow-line,
@@ -327,6 +327,15 @@ body {
   [data-visible] .step-badge {
     opacity: 1;
     transform: none;
+    animation: none;
+  }
+
+  /* Scripts are running (set by Reveal on mount): drop the safety net, so
+     content below the fold waits for the user to scroll to it. */
+  [data-reveal][data-reveal-ready],
+  [data-reveal-ready] .eyebrow-line,
+  [data-reveal-ready] .steps-line,
+  [data-reveal-ready] .step-badge {
     animation: none;
   }
 }

@@ -21,6 +21,10 @@ export function Reveal({ children, delay = 0, className }: RevealProps) {
     const el = ref.current;
     if (!el) return;
 
+    // Scripts are running: cancel the no-JS safety net in globals.css so
+    // below-the-fold content waits for the user to scroll to it.
+    el.dataset.revealReady = "";
+
     if (!("IntersectionObserver" in window)) {
       el.dataset.visible = "";
       return;

@@ -20,7 +20,7 @@ export function Hero() {
       <div aria-hidden className="bg-dots absolute inset-0 -z-10" />
       <HeroRings />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 [&>*]:min-w-0 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
+      <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 *:min-w-0 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <p
             className="animate-rise inline-flex items-center gap-2 rounded-full border border-brand/15 bg-white/85 px-3.5 py-1.5 font-mono text-[0.7rem] font-semibold tracking-wider text-brand-dark uppercase shadow-sm sm:text-xs"
@@ -48,7 +48,7 @@ export function Hero() {
           <p className="animate-rise mt-5 max-w-xl text-lg leading-relaxed text-pretty text-muted" style={rise(180)}>
             {SITE.name} is a geolocation-based emergency and assistance coordination system for
             Cordova, Cebu. Send an SOS, report incidents with a pinned location, find evacuation
-            centers, and follow updates on your reports — all from one Android app.
+            centers, and follow updates on your reports.
           </p>
 
           <ul

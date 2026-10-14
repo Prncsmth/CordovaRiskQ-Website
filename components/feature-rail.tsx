@@ -67,7 +67,7 @@ export function FeatureRail() {
       >
         {features.map((feature, index) => {
           return (
-            <li key={feature.title} className="w-[82%] shrink-0 snap-start sm:w-[22rem]">
+            <li key={feature.title} className="w-[82%] shrink-0 snap-start sm:w-88">
               <Reveal delay={(index % 4) * 70} className="h-full">
                 <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white transition duration-300 ease-out-soft hover:-translate-y-0.5 hover:border-brand/25 hover:shadow-[0_16px_36px_-24px_rgba(23,24,26,0.4)]">
                   {/* Real app screenshot: the top of the phone peeks out of a tinted panel. */}
@@ -78,14 +78,26 @@ export function FeatureRail() {
                     >
                       /{String(index + 1).padStart(2, "0")}
                     </span>
-                    <div className="absolute top-7 left-1/2 w-[62%] -translate-x-1/2 overflow-hidden rounded-t-[1.5rem] border-[5px] border-b-0 border-ink bg-ink shadow-[0_18px_34px_-16px_rgba(23,24,26,0.5)] transition duration-500 ease-out-soft group-hover:-translate-y-2">
-                      <Image
-                        src={feature.image}
-                        alt={`CORDOVA RISKQ app: ${feature.title}`}
-                        sizes="220px"
-                        className="block h-auto w-full rounded-t-[1.1rem]"
-                      />
-                    </div>
+                    {feature.image.width > feature.image.height ? (
+                      // Landscape crop of a screen: shown as a card rather than in a phone frame.
+                      <div className="absolute top-12 right-5 left-5 overflow-hidden rounded-2xl border border-line bg-white shadow-[0_18px_34px_-16px_rgba(23,24,26,0.45)] transition duration-500 ease-out-soft group-hover:-translate-y-2">
+                        <Image
+                          src={feature.image}
+                          alt={`CORDOVA RISKQ app: ${feature.title}`}
+                          sizes="320px"
+                          className="block h-auto w-full"
+                        />
+                      </div>
+                    ) : (
+                      <div className="absolute top-7 left-1/2 w-[62%] -translate-x-1/2 overflow-hidden rounded-t-3xl border-[5px] border-b-0 border-ink bg-ink shadow-[0_18px_34px_-16px_rgba(23,24,26,0.5)] transition duration-500 ease-out-soft group-hover:-translate-y-2">
+                        <Image
+                          src={feature.image}
+                          alt={`CORDOVA RISKQ app: ${feature.title}`}
+                          sizes="220px"
+                          className="block h-auto w-full rounded-t-[1.1rem]"
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="font-wordmark text-lg leading-snug tracking-tight text-ink uppercase">
