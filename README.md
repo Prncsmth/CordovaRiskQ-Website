@@ -27,13 +27,15 @@ All release details live in **`lib/release.ts`** (`APK_RELEASE`). Until it is
 filled in, the site shows "APK not yet available" and every download button is
 disabled.
 
-The current release (v1.0.0) is served by this site itself from
-`public/cordova-riskq-v1.0.0.apk`, so `downloadUrl` is the site path
-`/cordova-riskq-v1.0.0.apk`. Do not use the expo.dev artifact link: EAS
-artifacts expire. For a new build:
+The current release (v1.0.0, EAS build e3873d57, 2026-10-14) is served by
+this site itself from `public/cordova-riskq-v1.0.0-2026-10-14.apk`, so
+`downloadUrl` is the site path `/cordova-riskq-v1.0.0-2026-10-14.apk`. Do not
+use the expo.dev artifact link: EAS artifacts expire. For a new build:
 
-1. Put the new APK in `public/` (e.g. `public/cordova-riskq-v1.1.0.apk`) and
-   delete the old one, or upload it to a permanent public HTTPS host.
+1. Wait until the APK has fully downloaded, then put it in `public/` under a
+   **new filename** (version and date, e.g.
+   `public/cordova-riskq-v1.1.0-2026-11-02.apk`) and delete the old one. A new
+   name guarantees no browser or CDN serves a cached copy of the old APK.
 2. In `lib/release.ts` set `downloadUrl` (site path or HTTPS URL), `version`,
    `releaseDate` (YYYY-MM-DD), `fileSizeBytes`, `releaseNotes` and `sha256`.
 3. Run `npm run verify-apk`. It downloads the URL and checks the size and

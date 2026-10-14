@@ -40,19 +40,22 @@ export interface ApkReleaseConfig {
   minAndroid: string | null;
 }
 
-// EAS build 7fc8fbd5-a7c7-4c67-935d-252bd497e23b (preview profile,
-// com.cordovariskq.app, versionName 1.0.0, versionCode 1). The file is served
-// by this site from public/; lib/release.test.ts checks the file there matches
+// EAS build e3873d57-79f0-42cf-b32e-603305edc9ef (preview profile,
+// com.cordovariskq.app, versionName 1.0.0, versionCode 1), byte-identical to
+// the EAS artifact. The file is served by this site from public/; the
+// filename carries the release date so a new build never reuses a URL a
+// browser or CDN may have cached. lib/release.test.ts checks the file matches
 // fileSizeBytes and sha256, and `npm run verify-apk` re-checks it.
 export const APK_RELEASE: ApkReleaseConfig = {
   status: "available",
-  downloadUrl: "/cordova-riskq-v1.0.0.apk",
+  downloadUrl: "/cordova-riskq-v1.0.0-2026-10-14.apk",
   urlVerified: true,
   version: "1.0.0",
-  releaseDate: "2026-10-13",
-  fileSizeBytes: 116_201_628,
-  releaseNotes: ["First public release of the CORDOVA RISKQ Android app."],
-  sha256: "bd0fabc8eac3def51fafefd5c7505763635805a71de38a71430223e4abae85c8",
+  releaseDate: "2026-10-14",
+  fileSizeBytes: 116_202_140,
+  // From the build's commit: "Critical alert card no longer renders a stray white box".
+  releaseNotes: ["Fixed the Critical announcement alert card showing a stray white box."],
+  sha256: "33cb01820c87d71a78d84b02c9219e8dd66f4fb444325e3677d4f49b488f8ddd",
   // minSdkVersion 24, read from the APK's manifest.
   minAndroid: "7.0",
 };
