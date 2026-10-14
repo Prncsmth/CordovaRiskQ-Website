@@ -10,9 +10,10 @@ interface RevealProps {
 }
 
 /**
- * Fades content up once when it scrolls into view. The hidden starting state
- * and reduced-motion handling live in globals.css, so content renders fully
- * visible when scripts are off or the user prefers reduced motion.
+ * Fades content up once when it scrolls into view. Content is visible by
+ * default (no JavaScript, slow networks); only elements still off screen when
+ * this mounts are hidden and then revealed. Styles and reduced-motion
+ * handling live in globals.css.
  */
 export function Reveal({ children, delay = 0, className }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,14 +22,19 @@ export function Reveal({ children, delay = 0, className }: RevealProps) {
     const el = ref.current;
     if (!el) return;
 
-    // Scripts are running: cancel the no-JS safety net in globals.css so
-    // below-the-fold content waits for the user to scroll to it.
-    el.dataset.revealReady = "";
-
-    if (!("IntersectionObserver" in window)) {
+    // Already on screen when scripts load: leave it visible rather than
+    // hiding it in front of the user.
+    const rect = el.getBoundingClientRect();
+    const onScreen =
+      rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
+    if (onScreen || !("IntersectionObserver" in window)) {
       el.dataset.visible = "";
       return;
     }
+
+    // Off screen: hide it now (nobody can see that happen) and play the
+    // reveal once it scrolls into view.
+    el.dataset.armed = "";
 
     const observer = new IntersectionObserver(
       ([entry]) => {

@@ -267,77 +267,53 @@ body {
   font-weight: 600;
 }
 
-/* ---------- Scroll reveal (see components/reveal.tsx) ---------- */
-@keyframes reveal-fallback {
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* ---------- Scroll reveal (see components/reveal.tsx) ----------
+   Content is visible by default, so it shows without JavaScript and while
+   scripts load. Once mounted, Reveal "arms" only elements that are still
+   off screen — hiding them instantly where nobody can see — and marks them
+   visible as they scroll in, which plays the transition. */
+[data-reveal] {
+  transition:
+    opacity 700ms var(--ease-out-soft),
+    transform 700ms var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
-@media (scripting: enabled) {
-  [data-reveal] {
-    opacity: 0;
-    transform: translateY(28px);
-    transition:
-      opacity 700ms var(--ease-out-soft),
-      transform 700ms var(--ease-out-soft);
-    transition-delay: var(--reveal-delay, 0ms);
-    /* Safety net for when scripts never run; Reveal cancels it on mount. */
-    animation: reveal-fallback 1ms linear 4s forwards;
-  }
+[data-reveal][data-armed]:not([data-visible]) {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: none;
+}
 
-  [data-reveal][data-visible] {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
+/* Details that finish once their Reveal wrapper is on screen. */
+.eyebrow-line,
+.steps-line {
+  transform-origin: left;
+  transition: transform 900ms var(--ease-out-soft) 220ms;
+}
 
-  /* Details that finish once their Reveal wrapper is on screen. Each keeps
-     the same no-JS fallback as [data-reveal]. */
-  .eyebrow-line,
-  .steps-line {
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 900ms var(--ease-out-soft);
-    animation: reveal-fallback 1ms linear 4s forwards;
-  }
+.steps-line {
+  transition-duration: 1400ms;
+  transition-delay: 250ms;
+}
 
-  .eyebrow-line {
-    transition-delay: 220ms;
-  }
+.step-badge {
+  transition:
+    transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    opacity 260ms ease-out;
+  transition-delay: calc(var(--reveal-delay, 0ms) + 180ms);
+}
 
-  .steps-line {
-    transition-duration: 1400ms;
-    transition-delay: 250ms;
-  }
+[data-armed]:not([data-visible]) .eyebrow-line,
+[data-armed]:not([data-visible]) .steps-line {
+  transform: scaleX(0);
+  transition: none;
+}
 
-  .step-badge {
-    opacity: 0;
-    transform: scale(0.55);
-    transition:
-      transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      opacity 260ms ease-out;
-    transition-delay: calc(var(--reveal-delay, 0ms) + 180ms);
-    animation: reveal-fallback 1ms linear 4s forwards;
-  }
-
-  [data-visible] .eyebrow-line,
-  [data-visible] .steps-line,
-  [data-visible] .step-badge {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
-  /* Scripts are running (set by Reveal on mount): drop the safety net, so
-     content below the fold waits for the user to scroll to it. */
-  [data-reveal][data-reveal-ready],
-  [data-reveal-ready] .eyebrow-line,
-  [data-reveal-ready] .steps-line,
-  [data-reveal-ready] .step-badge {
-    animation: none;
-  }
+[data-armed]:not([data-visible]) .step-badge {
+  opacity: 0;
+  transform: scale(0.55);
+  transition: none;
 }
 
 /* ---------- Showcase tab content (replays on every tab switch) ---------- */
