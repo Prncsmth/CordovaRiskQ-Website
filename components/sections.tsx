@@ -30,7 +30,7 @@ export function ComparisonSection() {
   return (
     <Section
       eyebrow="Why it helps"
-      title="Less guesswork in an emergency."
+      title="Less guesswork in an emergency"
       intro="When something happens, the hardest parts are often explaining where you are and knowing what happens next. CORDOVA RISKQ keeps both in one place."
       className="bg-surface"
     >
@@ -90,7 +90,7 @@ export function FeaturesSection() {
     <Section
       id="features"
       eyebrow="Features"
-      title="Made for Cordova residents."
+      title="Made for Cordova residents"
       intro="Tools for asking for help, reporting incidents, finding safety and staying informed — in one app built for Cordova."
     >
       <FeatureRail />
@@ -139,7 +139,7 @@ export function HowItWorksSection() {
     <Section
       id="how-it-works"
       eyebrow="How it works"
-      title="Four steps. From install to assistance."
+      title="Four steps From install to assistance"
       intro="Set it up once, before you need it."
     >
       <div className="relative">
@@ -231,7 +231,7 @@ export function InstallGuideSection() {
     <Section
       id="install"
       eyebrow="Installation guide"
-      title="Installing the APK on Android."
+      title="Installing the APK on Android"
       intro="Apps installed from an APK file come from outside the Play Store, so Android asks for one extra permission. Menu names differ slightly between phone brands."
     >
       <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
