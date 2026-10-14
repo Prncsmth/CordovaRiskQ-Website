@@ -106,7 +106,7 @@ function HeroRings() {
     <svg
       aria-hidden
       viewBox="0 0 800 800"
-      className="pointer-events-none absolute top-[2rem] left-1/2 -z-10 w-[52rem] max-w-none -translate-x-1/2 lg:top-[-4rem] lg:left-[72%] lg:w-[60rem]"
+      className="pointer-events-none absolute top-8 left-1/2 -z-10 w-208 max-w-none -translate-x-1/2 lg:-top-16 lg:left-[72%] lg:w-240"
       fill="none"
     >
       <circle cx="400" cy="400" r="390" stroke="#c8102e" strokeOpacity="0.06" />

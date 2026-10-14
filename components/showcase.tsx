@@ -128,7 +128,7 @@ function ShowcaseVisual({ item, Icon }: { item: ShowcaseItem; Icon: ShowcaseItem
       </svg>
 
       {media ? (
-        <figure className="relative w-full max-w-[15.5rem]">
+        <figure className="relative w-full max-w-62">
           {/* Real recording or screenshot from the app, framed like a phone. */}
           <div className="overflow-hidden rounded-[2.1rem] border-[7px] border-ink bg-ink shadow-[0_34px_60px_-30px_rgba(23,24,26,0.6)]">
             <div className="overflow-hidden rounded-[1.6rem] bg-white">

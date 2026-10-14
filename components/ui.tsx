@@ -23,7 +23,7 @@ export function Logo({ className, priority }: LogoProps) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
       <Image src={logo} alt="" width={40} height={41} priority={priority} className="h-10 w-auto" />
-      <span className="flex flex-col font-wordmark text-[1.2rem] leading-[0.92] tracking-[-0.05em] uppercase">
+      <span className="flex flex-col font-wordmark text-[1.2rem] leading-[0.92] tracking-tighter uppercase">
         <span className="sr-only">{SITE.name}</span>
         {/* "C◉RDOVA": the municipal seal stands in for the O, as in the app header. */}
         <span aria-hidden className="flex items-center text-brand">
