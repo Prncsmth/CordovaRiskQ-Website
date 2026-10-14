@@ -367,6 +367,8 @@ export interface Feature {
   icon: LucideIcon;
   title: string;
   description: string;
+  /** Real app screenshot shown on the feature card. */
+  image: StaticImageData;
 }
 
 export const FEATURES: readonly Feature[] = [
@@ -375,42 +377,49 @@ export const FEATURES: readonly Feature[] = [
     title: "SOS with your location",
     description:
       "For an immediate emergency, slide the SOS button on Home and confirm. Responders receive your live location so they can find you.",
+    image: shotConfirmation,
   },
   {
     icon: FileText,
     title: "Incident reporting",
     description:
       "Report a flood, fire, medical emergency, road accident or other incident with details, an optional photo and a pinned location inside Cordova.",
+    image: shotReport,
   },
   {
     icon: MapPinned,
     title: "Evacuation center map",
     description:
       "See your nearest evacuation center on Home, browse every center on the map with its open or full status, and search any barangay in Cordova.",
+    image: shotMap,
   },
   {
     icon: Navigation,
     title: "Track your responder",
     description:
       "Once a responder accepts your SOS or report, see them on the map with an estimated arrival time and a button to call them.",
+    image: shotSos,
   },
   {
     icon: ClipboardList,
     title: "Report history",
     description:
       "Follow the status of everything you have reported, from Pending Review through to Resolved.",
+    image: shotHistory,
   },
   {
     icon: Bell,
     title: "Alerts and updates",
     description:
       "Receive updates on your reports, tide-level updates, safety tips and alerts about incidents near you.",
+    image: shotSettings,
   },
   {
     icon: LifeBuoy,
     title: "Help beyond emergencies",
     description:
       "Reach official hotlines, browse in-app FAQs, contact support and manage your account from one place.",
+    image: shotHotlines,
   },
 ];
 

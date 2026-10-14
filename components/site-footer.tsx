@@ -1,10 +1,11 @@
+import { Reveal } from "@/components/reveal";
 import { Logo } from "@/components/ui";
 import { FOOTER_LINKS, SITE } from "@/lib/site";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-white">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <Reveal className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
           <div className="max-w-sm">
             <Logo />
@@ -30,7 +31,7 @@ export function SiteFooter() {
           <p>&copy; {SITE.name}. All rights reserved.</p>
           <p>The Terms of Use and Privacy Policy are presented in the app when you create an account.</p>
         </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }

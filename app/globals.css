@@ -248,10 +248,10 @@ body {
 @media (scripting: enabled) {
   [data-reveal] {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(28px);
     transition:
-      opacity 560ms var(--ease-out-soft),
-      transform 560ms var(--ease-out-soft);
+      opacity 700ms var(--ease-out-soft),
+      transform 700ms var(--ease-out-soft);
     transition-delay: var(--reveal-delay, 0ms);
     /* Safety net: if scripts never hydrate, content still appears. */
     animation: reveal-fallback 1ms linear 2.5s forwards;

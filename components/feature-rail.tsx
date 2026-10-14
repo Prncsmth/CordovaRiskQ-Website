@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/reveal";
@@ -65,23 +66,33 @@ export function FeatureRail() {
         className="rail -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6"
       >
         {features.map((feature, index) => {
-          const Icon = feature.icon;
           return (
             <li key={feature.title} className="w-[82%] shrink-0 snap-start sm:w-[22rem]">
               <Reveal delay={(index % 4) * 70} className="h-full">
-                <article className="group flex h-full flex-col rounded-3xl border border-line bg-white p-6 transition duration-300 ease-out-soft hover:-translate-y-0.5 hover:border-brand/25 hover:shadow-[0_16px_36px_-24px_rgba(23,24,26,0.4)]">
-                  <div className="flex items-start justify-between">
-                    <span className="flex size-12 items-center justify-center rounded-2xl bg-brand-tint text-brand transition-colors duration-300 group-hover:bg-brand group-hover:text-white">
-                      <Icon aria-hidden className="size-6" />
-                    </span>
-                    <span aria-hidden className="font-mono text-sm text-faint">
+                <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-white transition duration-300 ease-out-soft hover:-translate-y-0.5 hover:border-brand/25 hover:shadow-[0_16px_36px_-24px_rgba(23,24,26,0.4)]">
+                  {/* Real app screenshot: the top of the phone peeks out of a tinted panel. */}
+                  <div className="relative h-56 overflow-hidden bg-[linear-gradient(160deg,#fff7f5_0%,#fdecea_60%,#fbdad6_100%)]">
+                    <span
+                      aria-hidden
+                      className="absolute top-4 right-4 z-10 rounded-full bg-white/85 px-2.5 py-1 font-mono text-xs text-muted backdrop-blur"
+                    >
                       /{String(index + 1).padStart(2, "0")}
                     </span>
+                    <div className="absolute top-7 left-1/2 w-[62%] -translate-x-1/2 overflow-hidden rounded-t-[1.5rem] border-[5px] border-b-0 border-ink bg-ink shadow-[0_18px_34px_-16px_rgba(23,24,26,0.5)] transition duration-500 ease-out-soft group-hover:-translate-y-2">
+                      <Image
+                        src={feature.image}
+                        alt={`CORDOVA RISKQ app: ${feature.title}`}
+                        sizes="220px"
+                        className="block h-auto w-full rounded-t-[1.1rem]"
+                      />
+                    </div>
                   </div>
-                  <h3 className="mt-6 font-wordmark text-lg leading-snug tracking-tight text-ink uppercase">
-                    {feature.title}
-                  </h3>
-                  <p className="mt-3 flex-1 leading-relaxed text-muted">{feature.description}</p>
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-wordmark text-lg leading-snug tracking-tight text-ink uppercase">
+                      {feature.title}
+                    </h3>
+                    <p className="mt-3 flex-1 leading-relaxed text-muted">{feature.description}</p>
+                  </div>
                 </article>
               </Reveal>
             </li>

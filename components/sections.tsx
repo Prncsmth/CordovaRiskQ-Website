@@ -1,4 +1,5 @@
 import { Check, ChevronDown, ShieldAlert, X, Zap } from "lucide-react";
+import { CountUp } from "@/components/count-up";
 import { FeatureRail } from "@/components/feature-rail";
 import { Reveal } from "@/components/reveal";
 import { Showcase } from "@/components/showcase";
@@ -180,8 +181,10 @@ export function GlanceBand() {
     <section aria-label="At a glance" className="border-y border-line bg-white">
       <dl className="mx-auto grid max-w-6xl grid-cols-2 px-4 sm:px-6 lg:grid-cols-4">
         {GLANCE.map((item, index) => (
-          <div
+          // Each Reveal is the dt/dd group itself, so the <dl> stays valid.
+          <Reveal
             key={item.label}
+            delay={index * 110}
             className={
               "flex flex-col-reverse items-center gap-1 py-10 text-center" +
               (index % 2 === 1 ? " border-l border-line-muted" : "") +
@@ -190,8 +193,10 @@ export function GlanceBand() {
             }
           >
             <dt className="font-mono text-xs tracking-wider text-muted uppercase">{item.label}</dt>
-            <dd className="font-wordmark text-5xl text-brand sm:text-6xl">{item.value}</dd>
-          </div>
+            <dd className="font-wordmark text-5xl text-brand tabular-nums sm:text-6xl">
+              <CountUp value={item.value} />
+            </dd>
+          </Reveal>
         ))}
       </dl>
     </section>

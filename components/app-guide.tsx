@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Lightbulb } from "lucide-react";
+import { Reveal } from "@/components/reveal";
 import { ScrollRail } from "@/components/scroll-rail";
 import { Section, cn } from "@/components/ui";
 import { GUIDE, type GuidePanel, type GuideTone } from "@/lib/content";
@@ -39,13 +40,15 @@ export function AppGuideSection() {
       title="How to use CORDOVA RISKQ."
       intro="A quick tour of the screens you'll use most — what each one is for and how to use it."
     >
-      <ScrollRail label="App guide" auto>
-        {GUIDE.map((panel, index) => (
-          <li key={panel.id} className="w-[82%] shrink-0 snap-start sm:w-[19.5rem]">
-            <GuideCard panel={panel} index={index} />
-          </li>
-        ))}
-      </ScrollRail>
+      <Reveal>
+        <ScrollRail label="App guide" auto>
+          {GUIDE.map((panel, index) => (
+            <li key={panel.id} className="w-[82%] shrink-0 snap-start sm:w-[19.5rem]">
+              <GuideCard panel={panel} index={index} />
+            </li>
+          ))}
+        </ScrollRail>
+      </Reveal>
     </Section>
   );
 }

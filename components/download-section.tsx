@@ -2,7 +2,7 @@ import { ArrowRight, Clock, PhoneCall, ShieldCheck, Smartphone } from "lucide-re
 import { DownloadButton } from "@/components/download-button";
 import { DownloadQr } from "@/components/download-qr";
 import { Reveal } from "@/components/reveal";
-import { Eyebrow, Logo, cn } from "@/components/ui";
+import { Eyebrow, Logo } from "@/components/ui";
 import { release } from "@/lib/release";
 
 const NOT_PUBLISHED = "Not yet published";
@@ -42,7 +42,7 @@ export function DownloadSection() {
           </p>
         </Reveal>
 
-        <div className="mt-10 overflow-hidden rounded-3xl border border-line bg-white shadow-[0_30px_60px_-40px_rgba(23,24,26,0.35)]">
+        <Reveal delay={100} className="mt-10 overflow-hidden rounded-3xl border border-line bg-white shadow-[0_30px_60px_-40px_rgba(23,24,26,0.35)]">
           <div className="flex flex-col gap-4 border-b border-line-muted p-6 sm:flex-row sm:items-start sm:justify-between sm:p-8">
             <div>
               <Logo />
@@ -119,19 +119,21 @@ export function DownloadSection() {
               ) : null}
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <aside
-          aria-label="Emergency notice"
-          className={cn("mt-6 flex gap-4 rounded-2xl border border-brand/20 bg-brand-tint p-5 sm:p-6")}
-        >
-          <PhoneCall aria-hidden className="mt-0.5 size-5 shrink-0 text-brand" />
-          <p className="text-sm leading-relaxed text-ink">
-            <strong className="font-semibold">In a life-threatening emergency, call your local emergency hotline directly.</strong>{" "}
-            CORDOVA RISKQ helps coordinate assistance but does not replace emergency calls, and SOS
-            alerts and reports need an internet connection to reach responders.
-          </p>
-        </aside>
+        <Reveal delay={180} className="mt-6">
+          <aside
+            aria-label="Emergency notice"
+            className="flex gap-4 rounded-2xl border border-brand/20 bg-brand-tint p-5 sm:p-6"
+          >
+            <PhoneCall aria-hidden className="mt-0.5 size-5 shrink-0 text-brand" />
+            <p className="text-sm leading-relaxed text-ink">
+              <strong className="font-semibold">In a life-threatening emergency, call your local emergency hotline directly.</strong>{" "}
+              CORDOVA RISKQ helps coordinate assistance but does not replace emergency calls, and SOS
+              alerts and reports need an internet connection to reach responders.
+            </p>
+          </aside>
+        </Reveal>
       </div>
     </section>
   );
