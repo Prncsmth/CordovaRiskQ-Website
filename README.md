@@ -64,6 +64,14 @@ behind a reverse proxy).
 3. After deploying, open the site on an Android phone and check the download
    panel shows the expected state.
 
+## Adding app screenshots
+
+The Showcase section shows each feature's in-app path until real screenshots
+are added. To add one, save a real phone screenshot as e.g.
+`public/screenshots/sos.png` and set `screenshot: "/screenshots/sos.png"` on
+that item in `SHOWCASE` (`lib/content.ts`). Only use genuine screenshots of the
+current app — never mock-ups.
+
 ## Content sources
 
 - Logo: `riskq.png` from the mobile app (`CordovaRiskQ-Frontend/assets/images`),

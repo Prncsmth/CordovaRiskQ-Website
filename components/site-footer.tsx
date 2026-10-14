@@ -1,5 +1,5 @@
 import { Logo } from "@/components/ui";
-import { NAV_LINKS, SITE } from "@/lib/site";
+import { FOOTER_LINKS, SITE } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -15,7 +15,7 @@ export function SiteFooter() {
 
           <nav aria-label="Footer">
             <ul className="grid grid-cols-2 gap-x-10 gap-y-3 text-sm sm:grid-cols-3">
-              {[{ href: "#download", label: "Download" }, ...NAV_LINKS].map((link) => (
+              {FOOTER_LINKS.map((link) => (
                 <li key={link.href}>
                   <a href={link.href} className="text-muted transition-colors hover:text-brand">
                     {link.label}

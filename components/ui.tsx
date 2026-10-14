@@ -1,6 +1,8 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { Reveal } from "@/components/reveal";
 import { SITE } from "@/lib/site";
+import seal from "@/public/brand/cordova-seal.png";
 import logo from "@/public/brand/riskq-logo.png";
 
 export function cn(...classes: Array<string | false | null | undefined>) {
@@ -10,21 +12,28 @@ export function cn(...classes: Array<string | false | null | undefined>) {
 interface LogoProps {
   className?: string;
   priority?: boolean;
-  /** Smaller wordmark on narrow screens, hidden below 380px (the header uses this). */
-  compact?: boolean;
 }
 
-export function Logo({ className, priority, compact }: LogoProps) {
+/**
+ * Brand lockup matching the app's HomeHeader: the RiskQ mark beside a stacked
+ * Archivo Black wordmark — "CORDOVA" (with the Cordova seal as its O) in
+ * primary red, "RISKQ" in secondary orange.
+ */
+export function Logo({ className, priority }: LogoProps) {
   return (
     <span className={cn("inline-flex items-center gap-2", className)}>
-      <Image src={logo} alt="" width={36} height={37} priority={priority} className="size-9 object-contain" />
-      <span
-        className={cn(
-          "font-wordmark leading-none tracking-tight text-ink",
-          compact ? "hidden text-[0.9rem] min-[380px]:inline sm:text-[1.05rem]" : "text-[1.05rem]",
-        )}
-      >
-        {SITE.name}
+      <Image src={logo} alt="" width={40} height={41} priority={priority} className="h-10 w-auto" />
+      <span className="flex flex-col font-wordmark text-[1.2rem] leading-[0.92] tracking-[-0.05em] uppercase">
+        <span className="sr-only">{SITE.name}</span>
+        {/* "C◉RDOVA": the municipal seal stands in for the O, as in the app header. */}
+        <span aria-hidden className="flex items-center text-brand">
+          C
+          <Image src={seal} alt="" width={48} height={48} priority={priority} className="mx-[-0.03em] size-[0.92em]" />
+          RDOVA
+        </span>
+        <span aria-hidden className="text-brand-secondary">
+          RiskQ
+        </span>
       </span>
     </span>
   );
@@ -52,31 +61,46 @@ export const buttonStyles = {
   ),
 } as const;
 
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <p
+      className={cn(
+        "inline-flex items-center gap-2 font-mono text-xs font-semibold tracking-[0.14em] text-brand uppercase",
+        className,
+      )}
+    >
+      <span aria-hidden className="eyebrow-line h-px w-6 bg-brand/60" />
+      {children}
+    </p>
+  );
+}
+
 interface SectionProps {
-  id: string;
+  id?: string;
   eyebrow: string;
   title: string;
   intro?: ReactNode;
   children: ReactNode;
   className?: string;
+  centered?: boolean;
 }
 
-export function Section({ id, eyebrow, title, intro, children, className }: SectionProps) {
-  const headingId = `${id}-heading`;
+export function Section({ id, eyebrow, title, intro, children, className, centered }: SectionProps) {
+  const headingId = `${id ?? eyebrow.toLowerCase().replace(/\W+/g, "-")}-heading`;
   return (
-    <section id={id} aria-labelledby={headingId} className={cn("py-20 sm:py-24", className)}>
+    <section id={id} aria-labelledby={headingId} className={cn("py-20 sm:py-28", className)}>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="max-w-2xl">
-          <p className="text-sm font-semibold tracking-wide text-brand uppercase">{eyebrow}</p>
+        <Reveal className={cn("max-w-3xl", centered && "mx-auto text-center")}>
+          <Eyebrow>{eyebrow}</Eyebrow>
           <h2
             id={headingId}
-            className="mt-3 font-display text-3xl font-bold tracking-tight text-balance text-ink sm:text-4xl"
+            className="mt-4 font-wordmark text-3xl leading-[1.05] tracking-tight text-balance text-ink uppercase sm:text-5xl"
           >
             {title}
           </h2>
-          {intro ? <p className="mt-4 text-lg leading-relaxed text-pretty text-muted">{intro}</p> : null}
-        </div>
-        <div className="mt-12">{children}</div>
+          {intro ? <p className="mt-5 text-lg leading-relaxed text-pretty text-muted">{intro}</p> : null}
+        </Reveal>
+        <div className="mt-12 sm:mt-14">{children}</div>
       </div>
     </section>
   );

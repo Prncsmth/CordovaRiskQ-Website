@@ -36,6 +36,8 @@ export interface ApkReleaseConfig {
   releaseNotes: readonly string[];
   /** SHA-256 checksum of the APK, as 64 hex characters. Optional. */
   sha256: string | null;
+  /** Oldest Android version the APK installs on (from its minSdkVersion), e.g. "7.0". */
+  minAndroid: string | null;
 }
 
 // EAS build 7fc8fbd5-a7c7-4c67-935d-252bd497e23b (preview profile,
@@ -51,6 +53,8 @@ export const APK_RELEASE: ApkReleaseConfig = {
   fileSizeBytes: 116_201_628,
   releaseNotes: ["First public release of the CORDOVA RISKQ Android app."],
   sha256: "bd0fabc8eac3def51fafefd5c7505763635805a71de38a71430223e4abae85c8",
+  // minSdkVersion 24, read from the APK's manifest.
+  minAndroid: "7.0",
 };
 
 export type ResolvedRelease =
@@ -64,6 +68,7 @@ export type ResolvedRelease =
       fileSizeLabel: string | null;
       releaseNotes: readonly string[];
       sha256: string | null;
+      minAndroid: string | null;
     };
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -151,6 +156,7 @@ export function resolveRelease(config: ApkReleaseConfig): ResolvedRelease {
     fileSizeLabel: config.fileSizeBytes === null ? null : formatFileSize(config.fileSizeBytes),
     releaseNotes: config.releaseNotes,
     sha256: config.sha256?.toLowerCase() ?? null,
+    minAndroid: config.minAndroid,
   };
 }
 

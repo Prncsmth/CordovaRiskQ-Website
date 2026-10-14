@@ -19,6 +19,7 @@ const VERIFIED: ApkReleaseConfig = {
   fileSizeBytes: 52_428_800,
   releaseNotes: ["First public release."],
   sha256: null,
+  minAndroid: "7.0",
 };
 
 describe("APK_RELEASE", () => {

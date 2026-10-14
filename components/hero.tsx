@@ -1,11 +1,12 @@
-import Image from "next/image";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, MapPin } from "lucide-react";
 import type { CSSProperties } from "react";
 import { DownloadButton } from "@/components/download-button";
+import { HeroPhone } from "@/components/hero-phone";
+import { RotatingText } from "@/components/rotating-text";
 import { buttonStyles } from "@/components/ui";
+import { HERO_CHECKS, HERO_ROTATING } from "@/lib/content";
 import { release } from "@/lib/release";
 import { SITE } from "@/lib/site";
-import logo from "@/public/brand/riskq-logo.png";
 
 const rise = (delay: number) => ({ "--rise-delay": `${delay}ms` }) as CSSProperties;
 
@@ -14,44 +15,63 @@ export function Hero() {
     <section
       id="top"
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden bg-[radial-gradient(120%_80%_at_85%_10%,#fdecea_0%,#fff7f5_38%,#ffffff_70%)]"
+      className="relative isolate overflow-hidden bg-[radial-gradient(110%_70%_at_70%_0%,#fdecea_0%,#fff7f5_40%,#ffffff_75%)]"
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:pt-24 lg:pb-28">
-        <div>
+      <div aria-hidden className="bg-dots absolute inset-0 -z-10" />
+      <HeroRings />
+
+      <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <p
-            className="animate-rise inline-flex items-center gap-2 rounded-full border border-brand/15 bg-white/80 px-3 py-1 text-sm font-medium text-brand-dark"
+            className="animate-rise inline-flex items-center gap-2 rounded-full border border-brand/15 bg-white/85 px-3.5 py-1.5 font-mono text-[0.7rem] font-semibold tracking-wider text-brand-dark uppercase shadow-sm sm:text-xs"
             style={rise(0)}
           >
-            <MapPin aria-hidden className="size-4" />
+            <MapPin aria-hidden className="size-3.5" />
             {SITE.locality} · Android app
           </p>
 
           <h1
             id="hero-heading"
-            className="animate-rise mt-5 font-display text-4xl leading-[1.08] font-bold tracking-tight text-balance text-ink sm:text-5xl lg:text-6xl"
+            className="animate-rise mt-6 font-wordmark text-[2.6rem] leading-[0.98] tracking-tight text-balance text-ink uppercase sm:text-6xl xl:text-[4.1rem]"
             style={rise(80)}
           >
             Emergency Assistance. <span className="text-brand">Better Coordination.</span>
           </h1>
 
           <p
-            className="animate-rise mt-6 max-w-xl text-lg leading-relaxed text-pretty text-muted"
-            style={rise(160)}
+            className="animate-rise mt-4 h-[1.3em] font-display text-xl font-semibold text-faint sm:text-2xl"
+            style={rise(140)}
           >
-            {SITE.name} is a geolocation-based emergency and assistance coordination system for
-            Cordova, Cebu. Send an SOS, report incidents with a pinned location, find evacuation
-            centers, and follow updates on your reports.
+            <RotatingText phrases={HERO_ROTATING} />
           </p>
 
-          <div className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row" style={rise(240)}>
-            <DownloadButton describedBy="hero-download-status" />
-            <a href="#how-it-works" className={buttonStyles.secondary}>
-              How it works
+          <p className="animate-rise mt-5 max-w-xl text-lg leading-relaxed text-pretty text-muted" style={rise(180)}>
+            {SITE.name} is a geolocation-based emergency and assistance coordination system for
+            Cordova, Cebu. Send an SOS, report incidents with a pinned location, find evacuation
+            centers, and follow updates on your reports — all from one Android app.
+          </p>
+
+          <ul
+            className="animate-rise mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-xs text-muted lg:justify-start"
+            style={rise(220)}
+          >
+            {HERO_CHECKS.map((item) => (
+              <li key={item} className="inline-flex items-center gap-1.5">
+                <Check aria-hidden className="size-3.5 text-success" />
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="animate-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={rise(260)}>
+            <DownloadButton describedBy="hero-download-status" className="sm:min-w-60" />
+            <a href="#showcase" className={buttonStyles.secondary}>
+              See the app in action
               <ArrowRight aria-hidden className="size-4" />
             </a>
           </div>
 
-          <p id="hero-download-status" className="animate-rise mt-4 text-sm text-muted" style={rise(240)}>
+          <p id="hero-download-status" className="animate-rise mt-4 font-mono text-xs text-muted" style={rise(260)}>
             {release.available ? (
               <>
                 Version {release.version} · Released {release.releaseDateLabel}
@@ -61,46 +81,38 @@ export function Hero() {
               "The official Android APK has not been published yet. Check back on this page for the release."
             )}
           </p>
+
+          <a
+            href="#showcase"
+            className="animate-rise mt-10 hidden items-center gap-2 font-mono text-[0.7rem] font-semibold tracking-[0.18em] text-faint uppercase transition-colors hover:text-brand lg:inline-flex"
+            style={rise(320)}
+          >
+            Scroll to explore the features
+            <ArrowDown aria-hidden className="size-3.5" />
+          </a>
         </div>
 
-        <div className="animate-rise relative mx-auto w-full max-w-[26rem]" style={rise(160)}>
-          <HeroIllustration />
+        <div className="animate-fade-in lg:-mr-10">
+          <HeroPhone />
         </div>
       </div>
     </section>
   );
 }
 
-/**
- * Brand mark inside a decorative coverage ring. Purely illustrative — it does
- * not show, simulate or imply any real location or responder tracking.
- */
-function HeroIllustration() {
+/** Decorative coverage rings behind the phone. Illustration only — no real location data. */
+function HeroRings() {
   return (
-    <div className="relative aspect-square">
-      <svg aria-hidden viewBox="0 0 400 400" className="absolute inset-0 size-full" fill="none">
-        <circle cx="200" cy="200" r="196" stroke="#e6e9eb" strokeDasharray="4 8" />
-        <circle cx="200" cy="200" r="160" stroke="#eef1f2" strokeWidth="1.5" />
-        <circle cx="200" cy="200" r="160" fill="#c8102e" fillOpacity="0.03" />
-        <circle className="radius-pulse" cx="200" cy="200" r="168" stroke="#c8102e" strokeOpacity="0.35" strokeWidth="1.5" />
-      </svg>
-
-      <div className="absolute inset-[17%] flex items-center justify-center rounded-full border border-line bg-white shadow-[0_24px_60px_-28px_rgba(23,24,26,0.35)]">
-        <Image
-          src={logo}
-          alt={`${SITE.name} logo`}
-          priority
-          sizes="(min-width: 1024px) 220px, 50vw"
-          className="w-[72%] object-contain"
-        />
-      </div>
-
-      <span
-        aria-hidden
-        className="absolute top-[9%] right-[13%] flex size-10 items-center justify-center rounded-full border border-line bg-white text-tide shadow-sm"
-      >
-        <MapPin className="size-5" />
-      </span>
-    </div>
+    <svg
+      aria-hidden
+      viewBox="0 0 800 800"
+      className="pointer-events-none absolute top-[2rem] left-1/2 -z-10 w-[52rem] max-w-none -translate-x-1/2 lg:top-[-4rem] lg:left-[72%] lg:w-[60rem]"
+      fill="none"
+    >
+      <circle cx="400" cy="400" r="390" stroke="#c8102e" strokeOpacity="0.06" />
+      <circle cx="400" cy="400" r="300" stroke="#c8102e" strokeOpacity="0.08" strokeDasharray="3 9" />
+      <circle cx="400" cy="400" r="210" stroke="#c8102e" strokeOpacity="0.1" />
+      <circle className="radius-pulse" cx="400" cy="400" r="330" stroke="#c8102e" strokeOpacity="0.18" strokeWidth="1.5" />
+    </svg>
   );
 }

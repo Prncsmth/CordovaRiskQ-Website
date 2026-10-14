@@ -25,6 +25,19 @@ export function getSiteUrl(): URL {
 }
 
 export const NAV_LINKS = [
+  { href: "#top", label: "Overview" },
+  { href: "#guide", label: "Guide" },
+  { href: "#showcase", label: "Showcase" },
+  { href: "#features", label: "Features" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#about", label: "About" },
+  { href: "#faq", label: "FAQ" },
+] as const;
+
+export const FOOTER_LINKS = [
+  { href: "#download", label: "Download" },
+  { href: "#guide", label: "App guide" },
+  { href: "#showcase", label: "Showcase" },
   { href: "#features", label: "Features" },
   { href: "#how-it-works", label: "How it works" },
   { href: "#install", label: "Install guide" },
