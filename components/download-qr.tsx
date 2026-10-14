@@ -41,7 +41,7 @@ export function DownloadQr({ href }: DownloadQrProps) {
   }, [href]);
 
   return (
-    <figure className="flex flex-col items-center gap-4 rounded-2xl text-center sm:flex-row sm:text-left border border-line bg-surface p-4">
+    <figure className="flex w-full min-w-0 flex-col items-center gap-4 rounded-2xl border border-line bg-surface p-4 text-center sm:flex-row sm:text-left">
       <div className="relative size-36 shrink-0 rounded-xl border border-line bg-white p-2.5 sm:size-40">
         {svg ? (
           <div
@@ -57,7 +57,7 @@ export function DownloadQr({ href }: DownloadQrProps) {
           </div>
         )}
       </div>
-      <figcaption className="min-w-0">
+      <figcaption className="w-full min-w-0 sm:flex-1">
         <p className="font-mono text-xs font-semibold tracking-wider text-ink uppercase">Scan to download</p>
         <p className="mt-1.5 text-sm leading-relaxed text-muted">
           On a computer? Scan this with your Android phone&apos;s camera to download the APK directly.

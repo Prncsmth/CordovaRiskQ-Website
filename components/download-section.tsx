@@ -66,7 +66,7 @@ export function DownloadSection() {
             </p>
           </div>
 
-          <div className="grid gap-8 p-6 sm:p-8 md:grid-cols-[1.15fr_1fr]">
+          <div className="grid grid-cols-1 gap-8 p-6 *:min-w-0 sm:p-8 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
             <div>
               <p className="leading-relaxed text-muted">
                 {release.available
