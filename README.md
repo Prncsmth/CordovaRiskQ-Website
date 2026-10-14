@@ -27,9 +27,9 @@ All release details live in **`lib/release.ts`** (`APK_RELEASE`). Until it is
 filled in, the site shows "APK not yet available" and every download button is
 disabled.
 
-The current release (v1.0.0, EAS build e3873d57, 2026-10-14) is served by
-this site itself from `public/cordova-riskq-v1.0.0-2026-10-14.apk`, so
-`downloadUrl` is the site path `/cordova-riskq-v1.0.0-2026-10-14.apk`. Do not
+The current release (v1.0.0, EAS build ac136500, 2026-10-15) is served by
+this site itself from `public/cordova-riskq-v1.0.0-2026-10-15.apk`, so
+`downloadUrl` is the site path `/cordova-riskq-v1.0.0-2026-10-15.apk`. Do not
 use the expo.dev artifact link: EAS artifacts expire. For a new build:
 
 1. Wait until the APK has fully downloaded, then put it in `public/` under a

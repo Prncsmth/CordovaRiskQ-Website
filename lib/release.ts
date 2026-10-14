@@ -40,7 +40,7 @@ export interface ApkReleaseConfig {
   minAndroid: string | null;
 }
 
-// EAS build e3873d57-79f0-42cf-b32e-603305edc9ef (preview profile,
+// EAS build ac136500-db5f-43ce-bc3e-7dca4b297b78 (preview profile,
 // com.cordovariskq.app, versionName 1.0.0, versionCode 1), byte-identical to
 // the EAS artifact. The file is served by this site from public/; the
 // filename carries the release date so a new build never reuses a URL a
@@ -48,14 +48,14 @@ export interface ApkReleaseConfig {
 // fileSizeBytes and sha256, and `npm run verify-apk` re-checks it.
 export const APK_RELEASE: ApkReleaseConfig = {
   status: "available",
-  downloadUrl: "/cordova-riskq-v1.0.0-2026-10-14.apk",
+  downloadUrl: "/cordova-riskq-v1.0.0-2026-10-15.apk",
   urlVerified: true,
   version: "1.0.0",
-  releaseDate: "2026-10-14",
-  fileSizeBytes: 116_202_140,
-  // From the build's commit: "Critical alert card no longer renders a stray white box".
-  releaseNotes: ["Fixed the Critical announcement alert card showing a stray white box."],
-  sha256: "33cb01820c87d71a78d84b02c9219e8dd66f4fb444325e3677d4f49b488f8ddd",
+  releaseDate: "2026-10-15",
+  fileSizeBytes: 116_206_056,
+  // Release note highlights the live GPS location shown on the homepage.
+  releaseNotes: ["Homepage location now follows live GPS and shows the current barangay or city."],
+  sha256: "bffe2e0f98b694addd60215db88d20d6b3631139380dd43b2200786d1e474a5f",
   // minSdkVersion 24, read from the APK's manifest.
   minAndroid: "7.0",
 };
