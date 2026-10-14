@@ -43,7 +43,7 @@ export function AppGuideSection() {
       <Reveal>
         <ScrollRail label="App guide" auto>
           {GUIDE.map((panel, index) => (
-            <li key={panel.id} className="w-[82%] shrink-0 snap-start sm:w-[19.5rem]">
+            <li key={panel.id} className="w-[82%] shrink-0 snap-start sm:w-78">
               <GuideCard panel={panel} index={index} />
             </li>
           ))}
@@ -60,7 +60,7 @@ function GuideCard({ panel, index }: { panel: GuidePanel; index: number }) {
   return (
     <article
       className={cn(
-        "relative flex h-[38rem] flex-col overflow-hidden rounded-[1.75rem] p-6 transition duration-300 ease-out-soft hover:-translate-y-1",
+        "relative flex h-152 flex-col overflow-hidden rounded-[1.75rem] p-6 transition duration-300 ease-out-soft hover:-translate-y-1",
         tone.panel,
       )}
     >
@@ -82,7 +82,7 @@ function GuideCard({ panel, index }: { panel: GuidePanel; index: number }) {
       </p>
 
       {/* Screenshots sit at the bottom and run off the edge, store-listing style. */}
-      <div className="relative mt-auto h-[19rem]">
+      <div className="relative mt-auto h-76">
         {back ? (
           <Phone
             shot={back}
@@ -91,7 +91,7 @@ function GuideCard({ panel, index }: { panel: GuidePanel; index: number }) {
         ) : null}
         <Phone
           shot={front}
-          className={cn("absolute top-0 w-[62%]", back ? "-left-1 -rotate-[4deg]" : "left-1/2 -translate-x-1/2")}
+          className={cn("absolute top-0 w-[62%]", back ? "-left-1 rotate-[-4deg]" : "left-1/2 -translate-x-1/2")}
         />
       </div>
     </article>

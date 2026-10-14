@@ -1,7 +1,7 @@
 export const SITE = {
   name: "CORDOVA RISKQ",
   shortName: "RiskQ",
-  title: "CORDOVA RISKQ — Emergency Assistance. Better Coordination.",
+  title: "CORDOVA RISKQ",
   description:
     "Download the CORDOVA RISKQ Android app: a geolocation-based emergency and assistance coordination system for Cordova, Cebu. Send an SOS, report incidents with a pinned location, and find evacuation centers.",
   locality: "Cordova, Cebu",
