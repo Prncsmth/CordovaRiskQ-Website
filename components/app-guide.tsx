@@ -67,7 +67,7 @@ function GuideCard({ panel, index }: { panel: GuidePanel; index: number }) {
       <p className={cn("font-mono text-[0.7rem] font-semibold tracking-[0.16em] uppercase", tone.label)}>
         {String(index + 1).padStart(2, "0")} · {panel.label}
       </p>
-      <h3 className="mt-3 font-wordmark text-[1.7rem] leading-[1.02] tracking-tight text-balance uppercase">
+      <h3 className="mt-3 font-wordmark text-[clamp(1.35rem,7.4vw,1.7rem)] leading-[1.02] tracking-tight text-balance uppercase">
         {panel.title}
       </h3>
       <p className={cn("mt-3 text-sm leading-relaxed", tone.body)}>{panel.description}</p>

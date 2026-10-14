@@ -37,10 +37,11 @@ export function SiteHeader() {
           {/* Always usable: jumps to the download panel. */}
           <a
             href="#download"
-            className="inline-flex h-10 items-center gap-1.5 rounded-full bg-brand px-4 font-mono text-[0.72rem] font-semibold tracking-wider whitespace-nowrap text-white uppercase transition duration-200 ease-out-soft hover:-translate-y-px hover:bg-brand-dark hover:shadow-[0_6px_16px_-6px_rgba(156,12,36,0.5)] active:translate-y-0 active:scale-[0.97]"
+            className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-brand px-4 font-mono max-[359px]:w-10 max-[359px]:px-0 text-[0.72rem] font-semibold tracking-wider whitespace-nowrap text-white uppercase transition duration-200 ease-out-soft hover:-translate-y-px hover:bg-brand-dark hover:shadow-[0_6px_16px_-6px_rgba(156,12,36,0.5)] active:translate-y-0 active:scale-[0.97]"
           >
             <Download aria-hidden className="size-4" />
-            <span>
+            {/* Icon only on the narrowest phones so the menu button still fits. */}
+            <span className="max-[359px]:sr-only">
               Download<span className="hidden sm:inline"> app</span>
             </span>
           </a>

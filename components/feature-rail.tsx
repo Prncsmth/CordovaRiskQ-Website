@@ -63,7 +63,7 @@ export function FeatureRail() {
       <ul
         ref={railRef}
         aria-label="Features"
-        className="rail -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6"
+        className="rail rail-fade -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-2 sm:-mx-6 sm:scroll-px-6 sm:px-6"
       >
         {features.map((feature, index) => {
           return (

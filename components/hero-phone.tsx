@@ -47,7 +47,7 @@ export function HeroPhone() {
       data-active={active || undefined}
       // The image has generous transparent margins around the phone, so it is
       // drawn wider than its column; the hero clips anything past the viewport.
-      className="phone-figure group relative left-1/2 w-[150%] max-w-184 -translate-x-1/2 select-none sm:w-[120%] lg:w-[130%]"
+      className="phone-figure group relative left-1/2 w-[150%] max-w-[min(46rem,130vh)] -translate-x-1/2 select-none sm:w-[120%] lg:w-[130%]"
     >
       <div className="phone-float">
         <div

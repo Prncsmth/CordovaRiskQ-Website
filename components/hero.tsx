@@ -20,7 +20,7 @@ export function Hero() {
       <div aria-hidden className="bg-dots absolute inset-0 -z-10" />
       <HeroRings />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
+      <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 [&>*]:min-w-0 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
           <p
             className="animate-rise inline-flex items-center gap-2 rounded-full border border-brand/15 bg-white/85 px-3.5 py-1.5 font-mono text-[0.7rem] font-semibold tracking-wider text-brand-dark uppercase shadow-sm sm:text-xs"
@@ -32,7 +32,7 @@ export function Hero() {
 
           <h1
             id="hero-heading"
-            className="animate-rise mt-6 font-wordmark text-[2.6rem] leading-[0.98] tracking-tight text-balance text-ink uppercase sm:text-6xl xl:text-[4.1rem]"
+            className="animate-rise mt-6 font-wordmark text-[min(2.6rem,10vw)] leading-[0.98] tracking-tight text-balance text-ink uppercase sm:text-[min(3.75rem,calc(8vh+1.25rem))] lg:text-[min(4rem,5.4vw)]"
             style={rise(80)}
           >
             Emergency Assistance. <span className="text-brand">Better Coordination.</span>
@@ -84,7 +84,7 @@ export function Hero() {
 
           <a
             href="#showcase"
-            className="animate-rise mt-10 hidden items-center gap-2 font-mono text-[0.7rem] font-semibold tracking-[0.18em] text-faint uppercase transition-colors hover:text-brand lg:inline-flex"
+            className="animate-rise mt-8 hidden items-center gap-2 py-2 font-mono text-[0.7rem] font-semibold tracking-[0.18em] text-faint uppercase transition-colors hover:text-brand lg:inline-flex"
             style={rise(320)}
           >
             Scroll to explore the features

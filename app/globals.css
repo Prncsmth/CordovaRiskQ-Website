@@ -168,6 +168,36 @@ body {
   scrollbar-width: none;
 }
 
+/* Soft edges, so cards fade out instead of being cut off at the screen edge. */
+.rail-fade {
+  mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+
+/* Cards fade and settle as they travel through the rail (scroll-driven, so it
+   follows both the auto-scroll and the user's own swiping). */
+@keyframes rail-item {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.92);
+  }
+  22%,
+  78% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.92);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .rail-fade > li {
+    animation: rail-item linear both;
+    animation-timeline: view(inline);
+  }
+}
+
 .rail::-webkit-scrollbar {
   display: none;
 }
@@ -369,7 +399,8 @@ body {
   }
 
   .phone-float,
-  .phone-highlight-pulse {
+  .phone-highlight-pulse,
+  .rail-fade > li {
     animation: none !important;
   }
 

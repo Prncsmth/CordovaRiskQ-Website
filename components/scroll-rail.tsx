@@ -164,7 +164,7 @@ export function ScrollRail({ label, children, auto = false, speed = 32 }: Scroll
         onFocus={() => (hovering.current = true)}
         onBlur={() => (hovering.current = false)}
         className={cn(
-          "rail -mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6",
+          "rail rail-fade -mx-4 flex gap-4 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6",
           // Snap points fight the continuous motion, so only snap when static.
           !auto && "snap-x snap-mandatory scroll-px-4 sm:scroll-px-6",
         )}

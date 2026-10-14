@@ -86,7 +86,7 @@ export function Showcase() {
             <h3 className="font-wordmark text-2xl tracking-tight text-ink uppercase sm:text-3xl">{item.title}</h3>
             <p className="mt-3 max-w-xl leading-relaxed text-muted">{item.description}</p>
 
-            <dl className="mt-6 grid grid-cols-2 gap-3">
+            <dl className="mt-6 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
               {item.facts.map((fact, index) => (
                 <div
                   key={fact.label}
