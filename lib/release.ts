@@ -40,22 +40,25 @@ export interface ApkReleaseConfig {
   minAndroid: string | null;
 }
 
-// EAS build ac136500-db5f-43ce-bc3e-7dca4b297b78 (preview profile,
-// com.cordovariskq.app, versionName 1.0.0, versionCode 1), byte-identical to
+// EAS build 362e3ac1-9216-4f0e-a443-562244bb1e62 (preview profile,
+// com.cordovariskq.app, versionName 1.0.1, versionCode 2), byte-identical to
 // the EAS artifact. The file is served by this site from public/; the
 // filename carries the release date so a new build never reuses a URL a
 // browser or CDN may have cached. lib/release.test.ts checks the file matches
 // fileSizeBytes and sha256, and `npm run verify-apk` re-checks it.
 export const APK_RELEASE: ApkReleaseConfig = {
   status: "available",
-  downloadUrl: "/cordova-riskq-v1.0.0-2026-10-15.apk",
+  downloadUrl: "/cordova-riskq-v1.0.1-2026-10-16.apk",
   urlVerified: true,
-  version: "1.0.0",
-  releaseDate: "2026-10-15",
-  fileSizeBytes: 116_206_056,
-  // Release note highlights the live GPS location shown on the homepage.
-  releaseNotes: ["Homepage location now follows live GPS and shows the current barangay or city."],
-  sha256: "bffe2e0f98b694addd60215db88d20d6b3631139380dd43b2200786d1e474a5f",
+  version: "1.0.1",
+  releaseDate: "2026-10-16",
+  fileSizeBytes: 116_213_120,
+  releaseNotes: [
+    "Forgot password now takes one step per screen: enter the code, set a new password, then a confirmation.",
+    "Homepage location now reads as your barangay and its city or municipality, e.g. \"Barangay Day-as, Cordova\".",
+    "If a screen fails to load, the app now shows an error screen with a Retry button instead of a blank screen.",
+  ],
+  sha256: "8fd35c25b4b63305ceb331a970f55331d5b8fbdf606ae0e514704096d43ff7f2",
   // minSdkVersion 24, read from the APK's manifest.
   minAndroid: "7.0",
 };
