@@ -41,16 +41,17 @@ export interface ApkReleaseConfig {
 }
 
 // EAS build 362e3ac1-9216-4f0e-a443-562244bb1e62 (preview profile,
-// com.cordovariskq.app, versionName 1.0.1, versionCode 2), byte-identical to
-// the EAS artifact. The file is served by this site from public/; the
+// com.cordovariskq.app, versionCode 2), byte-identical to
+// the EAS artifact. Published as v1.0.0, the first public release (the build
+// itself still carries versionName 1.0.1 until the app is rebuilt). The file is served by this site from public/; the
 // filename carries the release date so a new build never reuses a URL a
 // browser or CDN may have cached. lib/release.test.ts checks the file matches
 // fileSizeBytes and sha256, and `npm run verify-apk` re-checks it.
 export const APK_RELEASE: ApkReleaseConfig = {
   status: "available",
-  downloadUrl: "/cordova-riskq-v1.0.1-2026-10-16.apk",
+  downloadUrl: "/cordova-riskq-v1.0.0-2026-10-16.apk",
   urlVerified: true,
-  version: "1.0.1",
+  version: "1.0.0",
   releaseDate: "2026-10-16",
   fileSizeBytes: 116_213_120,
   releaseNotes: [

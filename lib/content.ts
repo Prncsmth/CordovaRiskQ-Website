@@ -1,14 +1,13 @@
 /**
  * Page copy. Every feature and answer below mirrors what the CORDOVA RISKQ
- * mobile app actually does (see the app's onboarding intro, getting-started
- * tour, in-app FAQ and Terms screens). Keep it in sync with the app — do not
+ * mobile app actually does — the showcase steps are timed against the real
+ * screen recordings in public/brand/v2/. Keep it in sync with the app — do not
  * describe features the app does not ship.
  */
 import type { LucideIcon } from "lucide-react";
 import type { StaticImageData } from "next/image";
 import { APK_RELEASE } from "@/lib/release";
 import shotAddPhoto from "@/public/brand/addphoto.jpg";
-import shotAnnouncement from "@/public/brand/announcement.jpg";
 import shotConfirmation from "@/public/brand/confirmation.jpg";
 import shotSupport from "@/public/brand/contactsupport.jpg";
 import shotFaq from "@/public/brand/faqss.jpg";
@@ -19,21 +18,25 @@ import shotReport from "@/public/brand/report.jpg";
 import shotRoute from "@/public/brand/route.jpg";
 import shotSettings from "@/public/brand/settings.jpg";
 import shotSos from "@/public/brand/sos.jpg";
-import shotTrackResponder from "@/public/brand/track-responder.jpg";
 import shotViewRoute from "@/public/brand/viewroute.jpg";
+import shotSignIn from "@/public/brand/guide/sign-in.jpg";
+import shotSosFailed from "@/public/brand/guide/sos-failed.jpg";
+import shotWelcome from "@/public/brand/guide/welcome.jpg";
+import shotCoverageMap from "@/public/brand/guide/coverage-map.jpg";
+import shotWithinCordova from "@/public/brand/guide/within-cordova.jpg";
+import shotNotifications from "@/public/brand/guide/notifications.jpg";
+import shotCriticalAlert from "@/public/brand/guide/critical-alert.jpg";
+import shotSatellite from "@/public/brand/guide/satellite.jpg";
+import shotTrackResponder from "@/public/brand/track-responder.jpg";
 import {
-  Ambulance,
   Bell,
-  CarFront,
   ClipboardList,
   FileText,
-  Flame,
   House,
-  LifeBuoy,
-  MapPinned,
   Navigation,
+  PhoneCall,
   Siren,
-  Waves,
+  WifiOff,
 } from "lucide-react";
 
 /** Phrases cycled under the hero heading. */
@@ -44,16 +47,16 @@ export const HERO_ROTATING = [
   "Track your responder.",
 ] as const;
 
-export const HERO_CHECKS = ["Android app", "Made for Cordova, Cebu", "Location shared only when you ask"] as const;
+export const HERO_CHECKS = ["Works inside Cordova, Cebu", "Location shared only when you ask"] as const;
 
 /** Scrolling ticker of real app capabilities. */
 export const TICKER = [
   "SOS with your location",
   "Incident reporting",
-  "Evacuation center map",
+  "Cordova-only coverage",
+  "Evacuation routes",
   "Responder tracking",
   "Report history",
-  "Tide-level updates",
   "Official hotlines",
 ] as const;
 
@@ -78,6 +81,17 @@ export interface GuidePanel {
  */
 export const GUIDE: readonly GuidePanel[] = [
   {
+    id: "sign-in",
+    label: "Get started",
+    title: "Sign in once",
+    description: "Log in with your email, or continue with Google. Add a mobile number so responders can call you.",
+    tip: "New here? Tap Register",
+    tone: "dark",
+    shots: [
+      { image: shotSignIn, alt: "Sign in screen with email, password and Continue with Google" },
+    ],
+  },
+  {
     id: "sos",
     label: "SOS",
     title: "Send an SOS in seconds",
@@ -87,6 +101,17 @@ export const GUIDE: readonly GuidePanel[] = [
     shots: [
       { image: shotSos, alt: "SOS sent screen, waiting for a responder to accept" },
       { image: shotConfirmation, alt: "Send Emergency SOS confirmation dialog" },
+    ],
+  },
+  {
+    id: "no-signal",
+    label: "No connection",
+    title: "No data? Still call",
+    description: "If an SOS cannot reach the server, the app offers a one-tap emergency call instead.",
+    tip: "Calls can go through without mobile data",
+    tone: "dark",
+    shots: [
+      { image: shotSosFailed, alt: "Could not send your SOS dialog with a one-tap emergency call button" },
     ],
   },
   {
@@ -102,6 +127,18 @@ export const GUIDE: readonly GuidePanel[] = [
     ],
   },
   {
+    id: "geofence",
+    label: "Cordova only",
+    title: "Inside Cordova only",
+    description: "Every SOS and report checks your pin against Cordova's boundary. Look for Within Cordova before you submit.",
+    tip: "Outside Cordova? Call 911 or a local hotline",
+    tone: "tide",
+    shots: [
+      { image: shotCoverageMap, alt: "Map of the Cordova coverage area: SOS and reports work inside the boundary and are blocked outside" },
+      { image: shotWithinCordova, alt: "Pinned location card marked Within Cordova" },
+    ],
+  },
+  {
     id: "history",
     label: "Report history",
     title: "Follow every report",
@@ -109,6 +146,39 @@ export const GUIDE: readonly GuidePanel[] = [
     tip: "Tap New Report to file another one",
     tone: "dark",
     shots: [{ image: shotHistory, alt: "Report History listing SOS alerts and reports with their status" }],
+  },
+  {
+    id: "notifications",
+    label: "Notifications",
+    title: "Know when help moves",
+    description: "Get notified when a responder is assigned, on the way, arrives, and when your report is resolved.",
+    tip: "Tap the bell on Home",
+    tone: "light",
+    shots: [
+      { image: shotNotifications, alt: "Notifications list with responder updates" },
+    ],
+  },
+  {
+    id: "alerts",
+    label: "Alerts",
+    title: "Official alerts on Home",
+    description: "Critical alerts and advisories from Cordova appear at the top of your Home screen, next to the tide level.",
+    tip: "Tap an alert to read it in full",
+    tone: "red",
+    shots: [
+      { image: shotCriticalAlert, alt: "Critical alert card on the Home screen above the tide level" },
+    ],
+  },
+  {
+    id: "track",
+    label: "Track responder",
+    title: "See help on the way",
+    description: "Once a responder accepts, watch them on the map with an estimated arrival time and a button to call them.",
+    tip: "Open it from the SOS screen or Report History",
+    tone: "dark",
+    shots: [
+      { image: shotTrackResponder, alt: "Track Responder map with arrival time" },
+    ],
   },
   {
     id: "map",
@@ -120,6 +190,17 @@ export const GUIDE: readonly GuidePanel[] = [
     shots: [
       { image: shotViewRoute, alt: "Evacuation center details with facilities and a View Route button" },
       { image: shotMap, alt: "Map of Cordova with evacuation center pins" },
+    ],
+  },
+  {
+    id: "satellite",
+    label: "Satellite map",
+    title: "See the real ground",
+    description: "Switch the map to satellite view and search any barangay to spot roads, rooftops and evacuation centers.",
+    tip: "Use the layers button on the map",
+    tone: "dark",
+    shots: [
+      { image: shotSatellite, alt: "Satellite view of Buagsong, Cordova with an evacuation center pin" },
     ],
   },
   {
@@ -163,22 +244,36 @@ export const GUIDE: readonly GuidePanel[] = [
   },
 ];
 
-/** A real screen recording or screenshot from the app — never a mock-up. */
-export type ShowcaseMedia =
-  | { kind: "video"; src: string; poster: string; width: number; height: number; caption: string }
-  | { kind: "image"; image: StaticImageData; caption: string };
+/** A real screen recording from the app (public/brand/v2), never a mock-up. */
+export interface Clip {
+  src: string;
+  poster: string;
+  width: number;
+  height: number;
+}
+
+const clip = (name: string, height = 1144): Clip => ({
+  src: `/brand/v2/${name}.mp4`,
+  poster: `/brand/v2/posters/${name}.jpg`,
+  width: 540,
+  height,
+});
+
+/** One moment in a recording; `at` is the second it starts. */
+export interface ClipStep {
+  at: number;
+  label: string;
+}
 
 export interface ShowcaseItem {
   id: string;
   icon: LucideIcon;
   tab: string;
   title: string;
-  description: string;
-  facts: readonly { label: string; value: string }[];
-  /** How to reach this screen in the app, as shown in the in-app FAQ. */
-  path: readonly string[];
-  note: string;
-  media?: ShowcaseMedia;
+  summary: string;
+  /** What happens in the recording, in order; shown one at a time as it plays. */
+  steps: readonly ClipStep[];
+  clip: Clip;
 }
 
 export const SHOWCASE: readonly ShowcaseItem[] = [
@@ -186,279 +281,202 @@ export const SHOWCASE: readonly ShowcaseItem[] = [
     id: "sos",
     icon: Siren,
     tab: "SOS",
-    title: "Slide to send an SOS",
-    description:
-      "For an immediate emergency, slide the SOS button on Home and confirm. Responders receive your live location right away, so keep your phone with you.",
-    facts: [
-      { label: "Where", value: "Home screen" },
-      { label: "How", value: "Slide, then confirm" },
-      { label: "Shared", value: "Your live location" },
-      { label: "Next", value: "Track the responder" },
+    title: "SOS: one slide, one tap",
+    summary: "For a life-threatening emergency. Responders get your exact location.",
+    steps: [
+      { at: 0, label: "Slide the red SOS bar on Home" },
+      { at: 1.4, label: "Confirm with Send SOS" },
+      { at: 2.8, label: "The app pins your exact location" },
+      { at: 6.2, label: "Sent: wait for a responder to accept" },
     ],
-    path: ["Home", "SOS button", "Slide to confirm"],
-    note: "Use SOS only for an immediate emergency. In a life-threatening situation, also call a hotline directly.",
-    media: {
-      kind: "video",
-      src: "/brand/slidesos.mp4",
-      poster: "/brand/posters/slidesos.jpg",
-      width: 1072,
-      height: 2292,
-      caption: "Sliding to send an SOS",
-    },
-  },
-  {
-    id: "report",
-    icon: FileText,
-    tab: "Report",
-    title: "Report what's happening",
-    description:
-      "Choose the incident type, check the pinned location, add details and a photo if you can, then submit. Reports must be inside Cordova.",
-    facts: [
-      { label: "Types", value: "Flood, fire, medical, road accident, other" },
-      { label: "Location", value: "Your current spot, or tap the map" },
-      { label: "Photo", value: "Optional" },
-      { label: "Seen by", value: "Authorized response teams" },
-    ],
-    path: ["Report", "Choose type", "Submit Report"],
-    note: "Reports should reflect real, ongoing emergencies. False reports can delay help for others.",
-    media: {
-      kind: "video",
-      src: "/brand/reportincident.mp4",
-      poster: "/brand/posters/reportincident.jpg",
-      width: 576,
-      height: 1232,
-      caption: "Reporting an incident",
-    },
-  },
-  {
-    id: "map",
-    icon: MapPinned,
-    tab: "Evacuation map",
-    title: "Know your safer options",
-    description:
-      "Your nearest evacuation center is shown on Home. The Map tab lists every center — tap a pin for its details, status and directions.",
-    facts: [
-      { label: "Green pin", value: "Open evacuation center" },
-      { label: "Red pin", value: "Full evacuation center" },
-      { label: "Blue dot", value: "You" },
-      { label: "Search", value: "Any barangay in Cordova" },
-    ],
-    path: ["Map", "Tap a pin", "Details & directions"],
-    note: "Evacuation center details and status come from the CORDOVA RISKQ system.",
-    media: {
-      kind: "video",
-      src: "/brand/evacuationcenter.mp4",
-      poster: "/brand/posters/evacuationcenter.jpg",
-      width: 576,
-      height: 1216,
-      caption: "Finding an evacuation center",
-    },
+    clip: clip("sos", 1130),
   },
   {
     id: "track",
     icon: Navigation,
     tab: "Track responder",
     title: "See help on the way",
-    description:
-      "Once a responder accepts your SOS or report, open Track Responder to see them on the map with an estimated arrival time and a button to call them.",
-    facts: [
-      { label: "Available", value: "After a responder accepts" },
-      { label: "Shows", value: "Responder on the map" },
-      { label: "ETA", value: "Estimated arrival time" },
-      { label: "Contact", value: "One-tap call" },
+    summary: "Once a responder accepts, follow them live on the map.",
+    steps: [
+      { at: 0, label: "Responder assigned: tap Track Responder" },
+      { at: 1.2, label: "See them live on the map, with arrival time" },
+      { at: 3.4, label: "Call them with one tap" },
     ],
-    path: ["SOS screen or Report History", "Track Responder"],
-    note: "Tracking appears only for your own SOS or report, once it has been accepted.",
-    media: {
-      kind: "video",
-      src: "/brand/trackresponder.mp4",
-      poster: "/brand/posters/trackresponder.jpg",
-      width: 1072,
-      height: 2276,
-      caption: "Tracking a responder on the way",
-    },
+    clip: clip("track-responder", 1146),
+  },
+  {
+    id: "report",
+    icon: FileText,
+    tab: "Report incident",
+    title: "Report what you see",
+    summary: "Not life-threatening, but responders should know. Add details and a photo.",
+    steps: [
+      { at: 0, label: "Pick a category: flood, fire, medical, road accident or other" },
+      { at: 4.4, label: "Check the pin. It must say Within Cordova" },
+      { at: 6, label: "Describe what's happening" },
+      { at: 9.2, label: "Mark as urgent if needed" },
+      { at: 11, label: "Add a photo (optional)" },
+      { at: 22, label: "Submit Report" },
+      { at: 28, label: "Responders are notified" },
+    ],
+    clip: clip("report-incident", 1140),
+  },
+  {
+    id: "no-signal",
+    icon: WifiOff,
+    tab: "No connection",
+    title: "No data? Call instead",
+    summary: "If an SOS can't reach the server, the app offers a phone call right away.",
+    steps: [
+      { at: 0, label: "Send an SOS as usual" },
+      { at: 4, label: "Couldn't send? Make an emergency call in one tap" },
+    ],
+    clip: clip("sos-no-signal", 1134),
+  },
+  {
+    id: "evacuation",
+    icon: House,
+    tab: "Evacuation",
+    title: "Find a safe place",
+    summary: "See if a center is open or full, then follow the route there.",
+    steps: [
+      { at: 0, label: "Open or full, its facilities and distance" },
+      { at: 6, label: "View Route: walk or drive, with trip time and arrival" },
+    ],
+    clip: clip("evacuation-center", 1144),
   },
   {
     id: "history",
     icon: ClipboardList,
-    tab: "Report status",
+    tab: "Report history",
     title: "Follow every report",
-    description:
-      "Report History lists everything you have reported with its current status, from Pending Review through to Resolved.",
-    facts: [
-      { label: "Where", value: "Report History tab" },
-      { label: "Status", value: "Pending Review → Resolved" },
-      { label: "Updates", value: "Push notifications" },
-      { label: "Details", value: "Open any report" },
+    summary: "Every SOS and report you sent, with its current status.",
+    steps: [
+      { at: 0, label: "Pending Review → Responder Assigned → Resolved" },
+      { at: 6.5, label: "Open one for the pinned map and reference number" },
     ],
-    path: ["Report History", "Open a report"],
-    note: "Turn push notifications on or off any time in Profile › Settings.",
-    media: { kind: "image", image: shotHistory, caption: "Report History" },
+    clip: clip("report-history", 1154),
+  },
+  {
+    id: "alerts",
+    icon: Bell,
+    tab: "Notifications",
+    title: "Know when help moves",
+    summary: "Get notified when a responder is assigned, en route, arrives and resolves.",
+    steps: [
+      { at: 0, label: "Updates on your reports, plus flood-risk alerts" },
+      { at: 6, label: "Tap one to open the report" },
+    ],
+    clip: clip("notifications", 1152),
+  },
+  {
+    id: "hotlines",
+    icon: PhoneCall,
+    tab: "Hotlines",
+    title: "Call a hotline",
+    summary: "Official Cordova hotlines for disasters, fire and police. Works anywhere.",
+    steps: [
+      { at: 0, label: "Pick an official hotline" },
+      { at: 2.5, label: "It opens in your phone's dialer" },
+    ],
+    clip: clip("hotlines", 1146),
   },
 ];
 
-export const COMPARISON = {
-  without: {
-    title: "Without the app",
-    subtitle: "Information is scattered",
-    items: [
-      { title: "Explaining where you are", detail: "You describe your location from memory, often under stress." },
-      { title: "Searching for an open center", detail: "Which evacuation center is open, or already full, is hard to find out." },
-      { title: "No follow-up on reports", detail: "Once you've reported something, there's no easy way to see what happened next." },
-      { title: "Updates spread across chats", detail: "Alerts and advisories reach people unevenly through different channels." },
-    ],
-  },
-  with: {
-    title: "With CORDOVA RISKQ",
-    subtitle: "One app for Cordova",
-    items: [
-      { title: "Location attached automatically", detail: "Every SOS and report carries your pinned location inside Cordova." },
-      { title: "Open and full centers on one map", detail: "Green and red pins show each evacuation center's status, with directions." },
-      { title: "Status you can follow", detail: "Report History tracks each report from Pending Review to Resolved." },
-      { title: "Alerts in one place", detail: "Report updates, tide-level updates, safety tips and nearby incident alerts." },
-    ],
-  },
-} as const;
-
-export interface UseCase {
-  icon: LucideIcon;
+export interface ResponderClip {
+  id: string;
   title: string;
-  subtitle: string;
-  description: string;
+  summary: string;
+  steps: readonly ClipStep[];
+  clip: Clip;
 }
 
-export const USE_CASES: readonly UseCase[] = [
+/** What happens on the responder's phone after a resident asks for help. */
+export const RESPONDER_CLIPS: readonly ResponderClip[] = [
   {
-    icon: Waves,
-    title: "Flooding & high tide",
-    subtitle: "Coastal and low-lying barangays",
-    description: "Report flooding with a photo and pinned location, and keep an eye on tide-level updates in the app.",
+    id: "accept",
+    title: "A responder accepts",
+    summary: "Your SOS rings on duty responders. One accepts and heads to your pin.",
+    steps: [
+      { at: 0, label: "Accept" },
+      { at: 2.5, label: "Head out" },
+      { at: 6, label: "Navigate" },
+      { at: 9, label: "Arrive" },
+      { at: 14, label: "Resolve" },
+    ],
+    clip: clip("responder-sos", 1156),
   },
   {
-    icon: Flame,
-    title: "Fire",
-    subtitle: "Spreading fire or heavy smoke",
-    description: "Flag a fire with its exact location so response teams can assess and coordinate quickly.",
+    id: "barangay",
+    title: "Barangay responders stay local",
+    summary: "Incidents outside their assigned barangay are view-only.",
+    steps: [
+      { at: 0, label: "Live map" },
+      { at: 4.6, label: "View only" },
+    ],
+    clip: clip("responder-other-barangay", 1146),
   },
   {
-    icon: Ambulance,
-    title: "Medical emergency",
-    subtitle: "When someone needs care",
-    description: "Send an SOS or a medical report, then track the responder once one accepts.",
-  },
-  {
-    icon: CarFront,
-    title: "Road accident",
-    subtitle: "Collisions and blocked roads",
-    description: "Report a collision, injuries or a blocked road from where you are standing.",
-  },
-  {
-    icon: House,
-    title: "Evacuation",
-    subtitle: "Typhoons and severe weather",
-    description: "Find your nearest evacuation center and check whether it is open or already full.",
-  },
-  {
-    icon: LifeBuoy,
-    title: "Everyday preparedness",
-    subtitle: "Before anything happens",
-    description: "Save official hotlines, read safety tips and keep your contact details up to date.",
+    id: "municipal",
+    title: "The municipal team covers all of Cordova",
+    summary: "The municipal team can accept incidents from any barangay.",
+    steps: [
+      { at: 0, label: "Accept" },
+      { at: 7, label: "Team lobby" },
+      { at: 16, label: "Navigate" },
+    ],
+    clip: clip("responder-municipal", 1144),
   },
 ];
 
 /** Factual "at a glance" numbers. Count only what the app actually ships. */
 export const GLANCE = [
-  { value: 7, label: "Core features" },
+  { value: 13, label: "Barangays covered" },
   { value: 5, label: "Incident report types" },
   { value: 4, label: "Steps to get started" },
   { value: 2, label: "Ways to sign up" },
 ] as const;
-
-export interface Feature {
-  icon: LucideIcon;
-  title: string;
-  description: string;
-  /** Real app screenshot shown on the feature card. */
-  image: StaticImageData;
-}
-
-export const FEATURES: readonly Feature[] = [
-  {
-    icon: Siren,
-    title: "SOS with your location",
-    description:
-      "For an immediate emergency, slide the SOS button on Home and confirm. Responders receive your live location so they can find you.",
-    image: shotConfirmation,
-  },
-  {
-    icon: FileText,
-    title: "Incident reporting",
-    description:
-      "Report a flood, fire, medical emergency, road accident or other incident with details, an optional photo and a pinned location inside Cordova.",
-    image: shotReport,
-  },
-  {
-    icon: MapPinned,
-    title: "Evacuation center map",
-    description:
-      "See your nearest evacuation center on Home, browse every center on the map with its open or full status, and search any barangay in Cordova.",
-    image: shotMap,
-  },
-  {
-    icon: Navigation,
-    title: "Track your responder",
-    description:
-      "Once a responder accepts your SOS or report, see them on the map with an estimated arrival time and a button to call them.",
-    image: shotTrackResponder,
-  },
-  {
-    icon: ClipboardList,
-    title: "Report history",
-    description:
-      "Follow the status of everything you have reported, from Pending Review through to Resolved.",
-    image: shotHistory,
-  },
-  {
-    icon: Bell,
-    title: "Announcements and alerts",
-    description:
-      "See official announcements, like weather warnings, right on your Home screen, plus updates on your reports, tide-level updates and alerts about incidents near you.",
-    image: shotAnnouncement,
-  },
-  {
-    icon: LifeBuoy,
-    title: "Help beyond emergencies",
-    description:
-      "Reach official hotlines, browse in-app FAQs, contact support and manage your account from one place.",
-    image: shotHotlines,
-  },
-];
 
 export interface Step {
   title: string;
   description: string;
 }
 
-export const HOW_IT_WORKS: readonly Step[] = [
+export interface IllustratedStep extends Step {
+  /** Real app screen for this step. */
+  image: StaticImageData;
+  alt: string;
+  tone: GuideTone;
+}
+
+export const HOW_IT_WORKS: readonly IllustratedStep[] = [
   {
     title: "Install the app",
-    description:
-      "Download the official APK from this page and install it on your Android phone.",
+    description: "Download the APK from this page, open it and tap Get started.",
+    image: shotWelcome,
+    alt: "CORDOVA RISKQ welcome screen with a Get started button",
+    tone: "red",
   },
   {
     title: "Create your account",
-    description:
-      "Sign up with email or Google, add your mobile number so responders can reach you, and review the Terms of Use and Privacy Policy.",
+    description: "Sign in with email or Google, then add a mobile number responders can call.",
+    image: shotSignIn,
+    alt: "Sign in screen with email, password and Continue with Google",
+    tone: "dark",
   },
   {
     title: "Ask for help or report",
-    description:
-      "Use SOS for an immediate emergency, or file a report with its type, details and pinned location.",
+    description: "Slide to send an SOS in an emergency, or file a report for everything else.",
+    image: shotSos,
+    alt: "SOS sent screen waiting for a responder to accept",
+    tone: "tide",
   },
   {
     title: "Stay informed",
-    description:
-      "Follow your report's status, track an assigned responder, and receive alerts for your area.",
+    description: "Get notified as your responder is assigned, on the way and arrives.",
+    image: shotNotifications,
+    alt: "Notifications with responder updates",
+    tone: "light",
   },
 ];
 
@@ -486,7 +504,7 @@ export const INSTALL_STEPS: readonly Step[] = [
   {
     title: "Allow location and notifications",
     description:
-      "When the app asks, allow location so it can show nearby evacuation centers and attach your location to reports and SOS alerts, and allow notifications to receive updates.",
+      "Location is required: the app checks that SOS alerts and reports come from inside Cordova. Allow notifications to receive updates.",
   },
 ];
 
@@ -504,6 +522,18 @@ export const FAQS: readonly FaqItem[] = [
       "A geolocation-based emergency and assistance coordination app for Cordova, Cebu. It lets residents send an SOS, report incidents with a pinned location, find evacuation centers, and follow updates from response teams.",
   },
   {
+    id: "outside",
+    question: "I'm not in Cordova. Can I use the app?",
+    answer:
+      "You can install it, browse the map and call hotlines, but SOS alerts and incident reports only send from inside Cordova's municipal boundary. Outside Cordova, call 911 or your local emergency hotline.",
+  },
+  {
+    id: "sos-or-report",
+    question: "Should I send an SOS or a report?",
+    answer:
+      "SOS is for a life-threatening emergency happening to you now: one slide sends your location. A report is for incidents responders should know about, with a category, details and an optional photo.",
+  },
+  {
     id: "official",
     question: "Where do I get the official app?",
     answer:
@@ -516,28 +546,16 @@ export const FAQS: readonly FaqItem[] = [
       `This website distributes the Android app as an APK file for Android phones${APK_RELEASE.minAndroid ? ` running Android ${APK_RELEASE.minAndroid} or newer` : ""}. Install it using the installation guide above.`,
   },
   {
-    id: "hotlines",
-    question: "Does the app replace calling emergency hotlines?",
-    answer:
-      "No. CORDOVA RISKQ helps coordinate assistance, but it does not replace calling local emergency hotlines directly in life-threatening situations. The app's Contacts screen lists official hotlines.",
-  },
-  {
     id: "offline",
     question: "Does it work without an internet connection?",
     answer:
-      "SOS alerts and reports need a connection to reach responders. If you are in danger and cannot connect, call an emergency hotline directly — phone calls work without mobile data.",
+      "SOS alerts and reports need a connection. If an SOS can't be sent, the app offers a one-tap emergency call — phone calls work without mobile data.",
   },
   {
     id: "data",
     question: "Who can see my location and reports?",
     answer:
-      "Your location and report details are shared only when you submit a report or trigger an SOS, and only with authorized response teams so they can assess the situation and coordinate help. The full Terms of Use and Privacy Policy are shown in the app when you create your account.",
-  },
-  {
-    id: "unknown-apps",
-    question: "Is it safe to allow installing unknown apps?",
-    answer:
-      "Allowing it is needed for any app installed outside the Play Store. Only install APK files from sources you trust, such as this official page, and you can turn the permission off again after installing.",
+      "Your location and report details are shared only when you submit a report or send an SOS, and only with authorized response teams. The full Terms of Use and Privacy Policy are shown in the app when you create your account.",
   },
   {
     id: "update",

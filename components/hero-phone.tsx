@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import phone from "@/public/brand/app-home-phone.png";
+import mapScreen from "@/public/brand/guide/map-screen.jpg";
 
 /*
  * Geometry of the real app screenshot in public/brand/app-home-phone.png
@@ -119,5 +120,42 @@ function Highlight({ region, delay }: { region: typeof SOS; delay: number }) {
         <rect {...rect} className="phone-highlight-pulse" fill="none" stroke="#c8102e" strokeWidth="2" />
       </g>
     </g>
+  );
+}
+
+/**
+ * Second phone beside the hero phone: the real Map tab (evacuation centers),
+ * with the nearest center's pin and the Map tab highlighted.
+ */
+export function HeroMapPhone({ className }: { className?: string }) {
+  return (
+    <figure className={className}>
+      <div className="phone-float [animation-delay:-3s]">
+        <div className="relative rotate-[-9deg] overflow-hidden rounded-[2rem] border-[6px] border-ink bg-ink shadow-[0_40px_60px_-30px_rgba(23,24,26,0.6)]">
+          <div className="relative overflow-hidden rounded-[1.55rem]">
+            <Image
+              src={mapScreen}
+              alt="CORDOVA RISKQ Map tab showing the nearest evacuation center pin"
+              sizes="(min-width: 1024px) 15rem, 34vw"
+              className="block h-auto w-full"
+              draggable={false}
+            />
+            {/* Pulsing ring on the evacuation center pin. */}
+            <span aria-hidden className="absolute top-[46%] left-1/2 aspect-square w-[22%] -translate-x-1/2 -translate-y-1/2">
+              <span className="absolute inset-0 rounded-full border-2 border-success bg-success/15" />
+              <span className="map-pin-pulse absolute inset-0 rounded-full border-2 border-success" />
+            </span>
+            {/* Map tab highlighted in the bottom bar. */}
+            <span
+              aria-hidden
+              className="absolute top-[93.8%] left-[32.2%] h-[8%] w-[19%] -translate-x-1/2 -translate-y-1/2 rounded-2xl border-2 border-white shadow-[0_0_14px_rgba(255,255,255,0.9)]"
+            />
+          </div>
+        </div>
+        <figcaption className="absolute -top-[7%] left-[4%] rotate-[-9deg] rounded-full bg-success px-3 py-1.5 font-mono text-[0.62rem] font-semibold tracking-wide whitespace-nowrap text-white uppercase shadow-lg sm:text-xs">
+          Evacuation map
+        </figcaption>
+      </div>
+    </figure>
   );
 }

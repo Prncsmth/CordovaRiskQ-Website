@@ -22,8 +22,10 @@
   --color-warning-bg: #fef3e2;
 
   --font-sans:
-    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     "Noto Sans", sans-serif;
+  /* Labels, nav and chips use the UI sans too (no typewriter look). */
+  --font-mono: var(--font-sans);
   --font-display: var(--font-sora), var(--font-sans);
   --font-wordmark: var(--font-archivo-black), var(--font-sans);
 
@@ -143,10 +145,6 @@ body {
   animation: marquee 40s linear infinite;
 }
 
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
-}
-
 /* ---------- Showcase tab panel ---------- */
 @keyframes panel-in {
   from {
@@ -163,6 +161,44 @@ body {
   animation: panel-in 380ms var(--ease-out-soft) both;
 }
 
+/* Showcase: each step caption slides up as the video reaches it. */
+@keyframes step-caption {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.step-caption {
+  animation: step-caption 450ms var(--ease-out-soft) both;
+}
+
+/* Coverage map: Leaflet 1.9 blends tiles with plus-lighter, which washes the
+   satellite imagery out to white on light pages. Draw them normally. */
+.leaflet-container img.leaflet-tile {
+  mix-blend-mode: normal;
+}
+
+/* Evacuation-center pin on the hero map phone. */
+@keyframes map-pin-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+
+.map-pin-pulse {
+  animation: map-pin-pulse 1.8s var(--ease-out-soft) infinite;
+}
+
 /* ---------- Horizontal feature rail ---------- */
 .rail {
   scrollbar-width: none;
@@ -170,32 +206,7 @@ body {
 
 /* Soft edges, so cards fade out instead of being cut off at the screen edge. */
 .rail-fade {
-  mask-image: linear-gradient(to right, transparent 0, #000 7%, #000 93%, transparent 100%);
-}
-
-/* Cards fade and settle as they travel through the rail (scroll-driven, so it
-   follows both the auto-scroll and the user's own swiping). */
-@keyframes rail-item {
-  0% {
-    opacity: 0.2;
-    transform: scale(0.92);
-  }
-  22%,
-  78% {
-    opacity: 1;
-    transform: none;
-  }
-  100% {
-    opacity: 0.2;
-    transform: scale(0.92);
-  }
-}
-
-@supports (animation-timeline: view()) {
-  .rail-fade > li {
-    animation: rail-item linear both;
-    animation-timeline: view(inline);
-  }
+  mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%);
 }
 
 .rail::-webkit-scrollbar {
@@ -384,26 +395,22 @@ body {
   }
 
   .phone-float,
-  .phone-highlight-pulse,
-  .rail-fade > li {
+  .phone-highlight-pulse {
     animation: none !important;
   }
 
   /* Ticker becomes a static, wrapped list. */
+  /* The ticker keeps running on purpose, even with reduced motion. */
   .marquee-track {
-    animation: none !important;
-    transform: none !important;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100% !important;
+    animation-duration: 40s !important;
+    animation-iteration-count: infinite !important;
   }
 
-  .marquee-track [data-duplicate],
-  .rail [data-duplicate] {
-    display: none;
+  /* Scroll fade-ins play on purpose even with reduced motion. */
+  [data-reveal] {
+    transition-duration: 700ms !important;
   }
 
-  [data-reveal],
   .eyebrow-line,
   .steps-line,
   .step-badge {

@@ -94,7 +94,7 @@ export function Section({ id, eyebrow, title, intro, children, className, center
           <Eyebrow>{eyebrow}</Eyebrow>
           <h2
             id={headingId}
-            className="mt-4 font-wordmark text-3xl leading-[1.05] tracking-tight text-balance text-ink uppercase sm:text-5xl"
+            className="mt-4 font-display text-3xl leading-[1.1] font-bold tracking-tight text-balance text-ink sm:text-[2.75rem]"
           >
             {title}
           </h2>

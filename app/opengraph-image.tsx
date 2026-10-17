@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { SITE } from "@/lib/site";
 
-export const alt = `${SITE.name} — Emergency Assistance Better Coordination`;
+export const alt = `${SITE.name} — Geolocation-Based Emergency and Assistance Coordination`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -29,9 +29,9 @@ export default async function OpengraphImage() {
         <img src={logoSrc} width={300} height={300} alt="" />
         <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
           <div style={{ fontSize: 34, fontWeight: 800, color: "#c8102e", letterSpacing: 1 }}>{SITE.name}</div>
-          <div style={{ display: "flex", flexDirection: "column", marginTop: 20, fontSize: 64, fontWeight: 800, color: "#17181a", lineHeight: 1.08 }}>
-            <span>Emergency Assistance.</span>
-            <span style={{ color: "#c8102e" }}>Better Coordination.</span>
+          <div style={{ display: "flex", flexDirection: "column", marginTop: 20, fontSize: 52, fontWeight: 800, color: "#17181a", lineHeight: 1.08 }}>
+            <span>Geolocation-Based</span>
+            <span style={{ color: "#c8102e" }}>Emergency and Assistance Coordination.</span>
           </div>
           <div style={{ marginTop: 28, fontSize: 28, color: "#5f6672" }}>
             Android app for {SITE.locality}

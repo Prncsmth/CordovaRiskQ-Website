@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo_Black, Sora } from "next/font/google";
+import { Archivo_Black, Inter, Sora } from "next/font/google";
 import { SITE, getSiteUrl } from "@/lib/site";
 import "./globals.css";
 
@@ -8,6 +8,13 @@ const sora = Sora({
   variable: "--font-sora",
   subsets: ["latin"],
   weight: ["600", "700"],
+  display: "swap",
+});
+
+// Inter for body text, navigation and labels.
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -56,7 +63,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${sora.variable} ${archivoBlack.variable}`}>
+    <html lang="en" className={`${inter.variable} ${sora.variable} ${archivoBlack.variable}`}>
       <body className="min-h-dvh">{children}</body>
     </html>
   );

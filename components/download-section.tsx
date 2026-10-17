@@ -33,7 +33,7 @@ export function DownloadSection() {
           <Eyebrow>Download</Eyebrow>
           <h2
             id="download-heading"
-            className="mt-4 font-wordmark text-4xl leading-[1.02] tracking-tight text-balance text-ink uppercase sm:text-6xl"
+            className="mt-4 font-display text-4xl leading-[1.08] font-bold tracking-tight text-balance text-ink sm:text-5xl"
           >
             Get CORDOVA RISKQ
           </h2>

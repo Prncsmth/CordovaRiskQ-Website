@@ -3,15 +3,15 @@ import { DownloadSection } from "@/components/download-section";
 import { Hero } from "@/components/hero";
 import {
   AboutSection,
-  ComparisonSection,
   FaqSection,
-  FeaturesSection,
+  GeofenceSection,
   GlanceBand,
   HowItWorksSection,
   InstallGuideSection,
+  RespondersSection,
+  ReviewsSection,
   ShowcaseSection,
   TickerBand,
-  UseCasesSection,
 } from "@/components/sections";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -25,14 +25,14 @@ export default function HomePage() {
         <TickerBand />
         <AppGuideSection />
         <ShowcaseSection />
-        <ComparisonSection />
-        <FeaturesSection />
+        <GeofenceSection />
+        <RespondersSection />
         <GlanceBand />
-        <UseCasesSection />
         <HowItWorksSection />
         <DownloadSection />
         <InstallGuideSection />
         <AboutSection />
+        <ReviewsSection />
         <FaqSection />
       </main>
       <SiteFooter />

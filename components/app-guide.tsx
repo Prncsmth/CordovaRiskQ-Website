@@ -5,7 +5,7 @@ import { ScrollRail } from "@/components/scroll-rail";
 import { Section, cn } from "@/components/ui";
 import { GUIDE, type GuidePanel, type GuideTone } from "@/lib/content";
 
-const TONES: Record<GuideTone, { panel: string; label: string; body: string; tip: string }> = {
+export const TONES: Record<GuideTone, { panel: string; label: string; body: string; tip: string }> = {
   red: {
     panel: "bg-[linear-gradient(165deg,#d4183a_0%,#c8102e_45%,#9c0c24_100%)] text-white",
     label: "text-white/75",
@@ -39,11 +39,12 @@ export function AppGuideSection() {
       eyebrow="App guide"
       title="How to use CORDOVA RISKQ"
       intro="A quick tour of the screens you'll use most — what each one is for and how to use it."
+      className="overflow-x-clip"
     >
       <Reveal>
-        <ScrollRail label="App guide" auto>
+        <ScrollRail label="App guide">
           {GUIDE.map((panel, index) => (
-            <li key={panel.id} className="w-[82%] shrink-0 snap-start sm:w-78">
+            <li key={panel.id} className="w-[82vw] shrink-0 sm:w-78">
               <GuideCard panel={panel} index={index} />
             </li>
           ))}
@@ -60,14 +61,14 @@ function GuideCard({ panel, index }: { panel: GuidePanel; index: number }) {
   return (
     <article
       className={cn(
-        "relative flex h-152 flex-col overflow-hidden rounded-[1.75rem] p-6 transition duration-300 ease-out-soft hover:-translate-y-1",
+        "relative flex h-152 flex-col overflow-hidden rounded-[1.75rem] p-6 transition duration-300 ease-out-soft",
         tone.panel,
       )}
     >
       <p className={cn("font-mono text-[0.7rem] font-semibold tracking-[0.16em] uppercase", tone.label)}>
         {String(index + 1).padStart(2, "0")} · {panel.label}
       </p>
-      <h3 className="mt-3 font-wordmark text-[clamp(1.35rem,7.4vw,1.7rem)] leading-[1.02] tracking-tight text-balance uppercase">
+      <h3 className="mt-3 font-display text-[clamp(1.35rem,6.6vw,1.6rem)] leading-[1.12] font-bold tracking-tight text-balance">
         {panel.title}
       </h3>
       <p className={cn("mt-3 text-sm leading-relaxed", tone.body)}>{panel.description}</p>
@@ -98,7 +99,7 @@ function GuideCard({ panel, index }: { panel: GuidePanel; index: number }) {
   );
 }
 
-function Phone({ shot, className }: { shot: GuidePanel["shots"][number]; className?: string }) {
+export function Phone({ shot, className }: { shot: GuidePanel["shots"][number]; className?: string }) {
   return (
     <div
       className={cn(

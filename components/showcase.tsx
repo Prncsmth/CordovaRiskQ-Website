@@ -1,17 +1,31 @@
 "use client";
 
-import Image from "next/image";
-import { ChevronRight, Info } from "lucide-react";
-import { useId, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
-import { ShowcaseVideo } from "@/components/showcase-video";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { ShowcaseVideo, useClipSteps } from "@/components/showcase-video";
 import { cn } from "@/components/ui";
 import { SHOWCASE as items, type ShowcaseItem } from "@/lib/content";
 
-/** Accessible tabs (WAI-ARIA tabs pattern) showing one app feature at a time. */
+/**
+ * Accessible tabs (WAI-ARIA tabs pattern) showing one app feature at a time.
+ * Each recording plays once, then the next tab opens on its own, so the whole
+ * tour plays through without any clicks.
+ */
 export function Showcase() {
   const [active, setActive] = useState(0);
   const baseId = useId();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const tablistRef = useRef<HTMLDivElement>(null);
+
+  // Keep the active tab in view in the horizontally scrolling tab row (phones),
+  // without scrolling the page itself.
+  useEffect(() => {
+    const list = tablistRef.current;
+    const tab = tabRefs.current[active];
+    if (!list || !tab) return;
+    list.scrollTo({ left: tab.offsetLeft - list.clientWidth / 2 + tab.clientWidth / 2, behavior: "smooth" });
+  }, [active]);
+
+  const next = () => setActive((index) => (index + 1) % items.length);
 
   const select = (index: number) => {
     const next = (index + items.length) % items.length;
@@ -34,11 +48,11 @@ export function Showcase() {
   };
 
   const item = items[active];
-  const Icon = item.icon;
 
   return (
     <div>
       <div
+        ref={tablistRef}
         role="tablist"
         aria-label="App features"
         className="rail -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
@@ -81,96 +95,88 @@ export function Showcase() {
         tabIndex={0}
         className="mt-6 overflow-hidden rounded-3xl border border-line bg-white"
       >
-        <div key={item.id} className="panel-in grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.05fr_1fr] lg:gap-10 lg:p-10">
-          <div>
-            <h3 className="font-wordmark text-2xl tracking-tight text-ink uppercase sm:text-3xl">{item.title}</h3>
-            <p className="mt-3 max-w-xl leading-relaxed text-muted">{item.description}</p>
-
-            <dl className="mt-6 grid grid-cols-1 gap-3 min-[360px]:grid-cols-2">
-              {item.facts.map((fact, index) => (
-                <div
-                  key={fact.label}
-                  className="fact-in rounded-2xl border border-line-muted bg-surface p-4"
-                  style={{ "--i": index } as CSSProperties}
-                >
-                  <dt className="font-mono text-[0.68rem] font-semibold tracking-wider text-faint uppercase">
-                    {fact.label}
-                  </dt>
-                  <dd className="mt-1 text-sm font-semibold text-ink">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <p
-              className="fact-in mt-5 flex gap-2.5 rounded-2xl border border-brand/15 bg-brand-tint p-4 text-sm leading-relaxed text-ink/85"
-              style={{ "--i": item.facts.length } as CSSProperties}
-            >
-              <Info aria-hidden className="mt-0.5 size-4 shrink-0 text-brand" />
-              {item.note}
-            </p>
-          </div>
-
-          <ShowcaseVisual item={item} Icon={Icon} />
-        </div>
+        {/* Keyed so the video and step state reset when the tab changes. */}
+        <ShowcasePanel key={item.id} item={item} onEnded={next} />
       </div>
     </div>
   );
 }
 
-function ShowcaseVisual({ item, Icon }: { item: ShowcaseItem; Icon: ShowcaseItem["icon"] }) {
-  const { media } = item;
+function ShowcasePanel({ item, onEnded }: { item: ShowcaseItem; onEnded: () => void }) {
+  const { videoRef, active, time, duration, onTime } = useClipSteps(item.steps);
+  const step = item.steps[active];
+  const Icon = item.icon;
+
   return (
-    <div className="media-in relative flex flex-col items-center overflow-hidden rounded-2xl bg-[linear-gradient(160deg,#ffffff_0%,#fff7f5_45%,#fdecea_100%)] p-6 ring-1 ring-line sm:p-8">
-      <svg aria-hidden viewBox="0 0 400 400" className="pointer-events-none absolute -top-24 -right-24 size-80" fill="none">
-        <circle cx="200" cy="200" r="190" stroke="#c8102e" strokeOpacity="0.1" />
-        <circle cx="200" cy="200" r="140" stroke="#c8102e" strokeOpacity="0.14" />
-        <circle className="radius-pulse" cx="200" cy="200" r="150" stroke="#c8102e" strokeOpacity="0.3" />
-      </svg>
-
-      {media ? (
-        <figure className="relative w-full max-w-62">
-          {/* Real recording or screenshot from the app, framed like a phone. */}
-          <div className="overflow-hidden rounded-[2.1rem] border-[7px] border-ink bg-ink shadow-[0_34px_60px_-30px_rgba(23,24,26,0.6)]">
-            <div className="overflow-hidden rounded-[1.6rem] bg-white">
-              {media.kind === "video" ? (
-                <ShowcaseVideo
-                  key={media.src}
-                  src={media.src}
-                  poster={media.poster}
-                  width={media.width}
-                  height={media.height}
-                  label={`CORDOVA RISKQ app: ${media.caption}`}
-                />
-              ) : (
-                <Image
-                  src={media.image}
-                  alt={`CORDOVA RISKQ app: ${media.caption}`}
-                  sizes="248px"
-                  className="block h-auto w-full"
-                />
-              )}
-            </div>
-          </div>
-        </figure>
-      ) : (
-        <span className="relative flex size-16 items-center justify-center self-start rounded-2xl bg-[linear-gradient(145deg,#feeeec,#fbdad6)] text-brand shadow-sm">
-          <Icon aria-hidden className="size-8" />
+    <div className="panel-in grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-12 lg:p-12">
+      <div className="flex flex-col">
+        <span className="flex size-12 items-center justify-center rounded-2xl bg-brand text-white shadow-[0_8px_18px_-8px_rgba(200,16,46,0.6)]">
+          <Icon aria-hidden className="size-6" />
         </span>
-      )}
+        <h3 className="mt-5 font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl">{item.title}</h3>
+        <p className="mt-2 max-w-md leading-relaxed text-muted">{item.summary}</p>
 
-      <div className="relative mt-6 w-full">
-        <p className="font-mono text-[0.68rem] font-semibold tracking-wider text-faint uppercase">Find it in the app</p>
-        <ol className="mt-3 flex flex-wrap items-center gap-1.5">
-          {item.path.map((step, index) => (
-            <li key={step} className="flex items-center gap-1.5">
-              {index > 0 ? <ChevronRight aria-hidden className="size-4 text-faint" /> : null}
-              <span className="rounded-lg border border-line bg-white px-2.5 py-1.5 text-sm font-semibold text-ink">
-                {step}
-              </span>
-            </li>
-          ))}
-        </ol>
+        {/* The explanation follows the video: the current step slides in, and
+            the bar shows how far through each step the recording is. */}
+        <div className="mt-8" aria-live="polite">
+          <StepProgress steps={item.steps} time={time} duration={duration} />
+          <div key={active} className="step-caption mt-5 flex items-start gap-4">
+            <span className="font-display text-5xl leading-none font-bold text-brand tabular-nums">
+              {String(active + 1).padStart(2, "0")}
+            </span>
+            <p className="pt-1 font-display text-xl leading-snug font-semibold text-ink sm:text-2xl">{step.label}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="media-in relative flex items-center justify-center overflow-hidden rounded-2xl bg-[linear-gradient(160deg,#ffffff_0%,#fff7f5_45%,#fdecea_100%)] p-6 ring-1 ring-line sm:p-8">
+        <svg aria-hidden viewBox="0 0 400 400" className="pointer-events-none absolute -top-24 -right-24 size-80" fill="none">
+          <circle cx="200" cy="200" r="190" stroke="#c8102e" strokeOpacity="0.1" />
+          <circle cx="200" cy="200" r="140" stroke="#c8102e" strokeOpacity="0.14" />
+          <circle className="radius-pulse" cx="200" cy="200" r="150" stroke="#c8102e" strokeOpacity="0.3" />
+        </svg>
+        <PhoneFrame className="relative w-full max-w-62">
+          <ShowcaseVideo
+            clip={item.clip}
+            label={`CORDOVA RISKQ app: ${item.title}`}
+            videoRef={videoRef}
+            onTime={onTime}
+            onEnded={onEnded}
+          />
+        </PhoneFrame>
       </div>
     </div>
+  );
+}
+
+/** Frames a real recording like a phone. */
+export function PhoneFrame({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <figure className={className}>
+      <div className="overflow-hidden rounded-[2.1rem] border-[7px] border-ink bg-ink shadow-[0_34px_60px_-30px_rgba(23,24,26,0.6)]">
+        <div className="overflow-hidden rounded-[1.6rem] bg-white">{children}</div>
+      </div>
+    </figure>
+  );
+}
+
+/** One segment per step; the current one fills as the recording plays. */
+function StepProgress({ steps, time, duration }: { steps: ShowcaseItem["steps"]; time: number; duration: number }) {
+  return (
+    <ol className="flex gap-1.5" aria-label="Video progress">
+      {steps.map((step, index) => {
+        const end = steps[index + 1]?.at ?? duration;
+        const span = end - step.at;
+        const fill = span > 0 ? Math.min(Math.max((time - step.at) / span, 0), 1) : time >= step.at ? 1 : 0;
+        return (
+          <li key={step.at} className="h-1.5 flex-1 overflow-hidden rounded-full bg-line">
+            <span
+              className="block h-full origin-left rounded-full bg-brand transition-transform duration-300 ease-linear"
+              style={{ transform: `scaleX(${fill})` }}
+            />
+          </li>
+        );
+      })}
+    </ol>
   );
 }

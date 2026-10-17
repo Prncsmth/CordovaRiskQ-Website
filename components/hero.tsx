@@ -1,7 +1,7 @@
-import { ArrowDown, ArrowRight, Check, MapPin } from "lucide-react";
+import { Check, MapPin, Play } from "lucide-react";
 import type { CSSProperties } from "react";
 import { DownloadButton } from "@/components/download-button";
-import { HeroPhone } from "@/components/hero-phone";
+import { HeroMapPhone, HeroPhone } from "@/components/hero-phone";
 import { RotatingText } from "@/components/rotating-text";
 import { buttonStyles } from "@/components/ui";
 import { HERO_CHECKS, HERO_ROTATING } from "@/lib/content";
@@ -32,10 +32,12 @@ export function Hero() {
 
           <h1
             id="hero-heading"
-            className="animate-rise mt-6 font-wordmark text-[min(2.6rem,10vw)] leading-[0.98] tracking-tight text-balance text-ink uppercase sm:text-[min(3.75rem,calc(8vh+1.25rem))] lg:text-[min(4rem,5.4vw)]"
+            className="animate-rise mt-6 font-wordmark text-[min(2.3rem,6.6vw)] leading-[1.04] tracking-tight text-ink uppercase sm:text-[min(2.9rem,6.4vw)] lg:text-[min(2.6rem,3vw)]"
             style={rise(80)}
           >
-            Emergency Assistance <span className="text-brand">Better Coordination.</span>
+            {/* nowrap keeps "Geolocation-Based" on one line. */}
+            <span className="block whitespace-nowrap">Geolocation-Based</span>{" "}
+            <span className="block text-balance text-brand">Emergency and Assistance Coordination.</span>
           </h1>
 
           <p
@@ -43,12 +45,6 @@ export function Hero() {
             style={rise(140)}
           >
             <RotatingText phrases={HERO_ROTATING} />
-          </p>
-
-          <p className="animate-rise mt-5 max-w-xl text-lg leading-relaxed text-pretty text-muted" style={rise(180)}>
-            {SITE.name} is a geolocation-based emergency and assistance coordination system for
-            Cordova, Cebu. Send an SOS, report incidents with a pinned location, find evacuation
-            centers, and follow updates on your reports.
           </p>
 
           <ul
@@ -65,9 +61,9 @@ export function Hero() {
 
           <div className="animate-rise mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row" style={rise(260)}>
             <DownloadButton describedBy="hero-download-status" className="sm:min-w-60" />
-            <a href="#showcase" className={buttonStyles.secondary}>
-              See the app in action
-              <ArrowRight aria-hidden className="size-4" />
+            <a href="#video" className={buttonStyles.secondary}>
+              <Play aria-hidden className="size-4 fill-current" />
+              Watch the video
             </a>
           </div>
 
@@ -82,18 +78,13 @@ export function Hero() {
             )}
           </p>
 
-          <a
-            href="#showcase"
-            className="animate-rise mt-8 hidden items-center gap-2 py-2 font-mono text-[0.7rem] font-semibold tracking-[0.18em] text-faint uppercase transition-colors hover:text-brand lg:inline-flex"
-            style={rise(320)}
-          >
-            Scroll to explore the features
-            <ArrowDown aria-hidden className="size-3.5" />
-          </a>
         </div>
 
-        <div className="animate-fade-in lg:-mr-10">
-          <HeroPhone />
+        <div className="animate-fade-in relative lg:-mr-10">
+          <HeroMapPhone className="absolute top-[16%] left-[3%] z-0 w-[30%] sm:left-[8%] sm:w-[26%] lg:top-[14%] lg:-left-[2%] lg:w-[34%]" />
+          <div className="relative z-10">
+            <HeroPhone />
+          </div>
         </div>
       </div>
     </section>

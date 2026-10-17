@@ -24,7 +24,7 @@ export function SiteHeader() {
               <li key={link.href}>
                 <a
                   href={link.href}
-                  className="block rounded-full px-2.5 py-1.5 font-mono text-[0.7rem] font-semibold tracking-wider whitespace-nowrap text-muted uppercase transition-colors hover:bg-brand-tint hover:text-brand xl:px-4 xl:text-[0.72rem]"
+                  className="block rounded-full px-3 py-1.5 text-[0.84rem] font-medium whitespace-nowrap text-muted transition-colors hover:bg-brand-tint hover:text-brand xl:px-3.5 xl:text-sm"
                 >
                   {link.label}
                 </a>
@@ -37,7 +37,7 @@ export function SiteHeader() {
           {/* Always usable: jumps to the download panel. */}
           <a
             href="#download"
-            className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-brand px-4 font-mono max-[359px]:w-10 max-[359px]:px-0 text-[0.72rem] font-semibold tracking-wider whitespace-nowrap text-white uppercase transition duration-200 ease-out-soft hover:-translate-y-px hover:bg-brand-dark hover:shadow-[0_6px_16px_-6px_rgba(156,12,36,0.5)] active:translate-y-0 active:scale-[0.97]"
+            className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-brand px-4 max-[359px]:w-10 max-[359px]:px-0 text-sm font-semibold whitespace-nowrap text-white transition duration-200 ease-out-soft hover:-translate-y-px hover:bg-brand-dark hover:shadow-[0_6px_16px_-6px_rgba(156,12,36,0.5)] active:translate-y-0 active:scale-[0.97]"
           >
             <Download aria-hidden className="size-4" />
             {/* Icon only on the narrowest phones so the menu button still fits. */}

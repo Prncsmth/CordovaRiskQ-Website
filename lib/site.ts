@@ -1,7 +1,7 @@
 export const SITE = {
   name: "CORDOVA RISKQ",
   shortName: "RiskQ",
-  title: "CORDOVA RISKQ",
+  title: "CORDOVA RISKQ — Geolocation-Based Emergency and Assistance Coordination",
   description:
     "Download the CORDOVA RISKQ Android app: a geolocation-based emergency and assistance coordination system for Cordova, Cebu. Send an SOS, report incidents with a pinned location, and find evacuation centers.",
   locality: "Cordova, Cebu",
@@ -28,9 +28,9 @@ export const NAV_LINKS = [
   { href: "#top", label: "Overview" },
   { href: "#guide", label: "Guide" },
   { href: "#showcase", label: "Showcase" },
-  { href: "#features", label: "Features" },
   { href: "#how-it-works", label: "How it works" },
   { href: "#about", label: "About" },
+  { href: "#reviews", label: "Reviews" },
   { href: "#faq", label: "FAQ" },
 ] as const;
 
@@ -38,9 +38,11 @@ export const FOOTER_LINKS = [
   { href: "#download", label: "Download" },
   { href: "#guide", label: "App guide" },
   { href: "#showcase", label: "Showcase" },
-  { href: "#features", label: "Features" },
+  { href: "#coverage", label: "Coverage area" },
+  { href: "#responders", label: "Responders" },
   { href: "#how-it-works", label: "How it works" },
   { href: "#install", label: "Install guide" },
   { href: "#about", label: "About" },
+  { href: "#reviews", label: "Reviews" },
   { href: "#faq", label: "FAQ" },
 ] as const;

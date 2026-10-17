@@ -10,10 +10,11 @@ interface RevealProps {
 }
 
 /**
- * Fades content up once when it scrolls into view. Content is visible by
- * default (no JavaScript, slow networks); only elements still off screen when
- * this mounts are hidden and then revealed. Styles and reduced-motion
- * handling live in globals.css.
+ * Fades content in every time it scrolls into view, scrolling down or back
+ * up: it hides again once it has left the screen, so the next pass replays
+ * the fade. Content is visible by default (no JavaScript, slow networks);
+ * only elements still off screen when this mounts start hidden. Styles live
+ * in globals.css.
  */
 export function Reveal({ children, delay = 0, className }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,28 +23,29 @@ export function Reveal({ children, delay = 0, className }: RevealProps) {
     const el = ref.current;
     if (!el) return;
 
-    // Already on screen when scripts load: leave it visible rather than
-    // hiding it in front of the user.
     const rect = el.getBoundingClientRect();
     const onScreen =
       rect.top < window.innerHeight && rect.bottom > 0 && rect.left < window.innerWidth && rect.right > 0;
-    if (onScreen || !("IntersectionObserver" in window)) {
+    if (!("IntersectionObserver" in window)) {
       el.dataset.visible = "";
       return;
     }
+    // Already on screen when scripts load: show it rather than hiding it in
+    // front of the user. Off screen: it starts hidden (nobody can see that).
+    if (onScreen) el.dataset.visible = "";
 
-    // Off screen: hide it now (nobody can see that happen) and play the
-    // reveal once it scrolls into view.
     el.dataset.armed = "";
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) {
+        if (!entry) return;
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
           el.dataset.visible = "";
-          observer.disconnect();
+        } else if (!entry.isIntersecting) {
+          // Fully off screen: reset, so it fades in again on the next pass.
+          delete el.dataset.visible;
         }
       },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+      { threshold: [0, 0.12] },
     );
     observer.observe(el);
     return () => observer.disconnect();
