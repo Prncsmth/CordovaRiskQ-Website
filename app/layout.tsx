@@ -4,6 +4,7 @@ import { HALLOWEEN_THEME_SCRIPT } from "@/lib/halloween";
 import { SITE, getSiteUrl } from "@/lib/site";
 import "./globals.css";
 import "./halloween.css";
+import "./halloween-horror.css";
 
 // Same typefaces as the mobile app: Sora for display text, Archivo Black for the wordmark.
 const sora = Sora({

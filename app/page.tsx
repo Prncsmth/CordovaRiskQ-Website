@@ -1,5 +1,6 @@
 import { AppGuideSection } from "@/components/app-guide";
 import { DownloadSection } from "@/components/download-section";
+import { HorrorDivider } from "@/components/halloween/decor";
 import { HalloweenLayer } from "@/components/halloween/halloween-layer";
 import { Hero } from "@/components/hero";
 import {
@@ -25,15 +26,20 @@ export default function HomePage() {
         <Hero />
         <TickerBand />
         <AppGuideSection />
+        <HorrorDivider />
         <ShowcaseSection />
         <GeofenceSection />
+        <HorrorDivider eyes="left" />
         <RespondersSection />
         <GlanceBand />
         <HowItWorksSection />
+        <HorrorDivider />
         <DownloadSection />
         <InstallGuideSection />
+        <HorrorDivider eyes="left" />
         <AboutSection />
         <ReviewsSection />
+        <HorrorDivider />
         <FaqSection />
       </main>
       <SiteFooter />

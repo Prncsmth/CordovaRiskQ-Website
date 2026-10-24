@@ -1,4 +1,5 @@
 import { Download } from "lucide-react";
+import { BloodDrips } from "@/components/halloween/decor";
 import { SoundToggle } from "@/components/halloween/sound-toggle";
 import { MobileNav } from "@/components/mobile-nav";
 import { Logo } from "@/components/ui";
@@ -50,6 +51,7 @@ export function SiteHeader() {
           <MobileNav />
         </div>
       </div>
+      <BloodDrips className="hw-header-drips" />
     </header>
   );
 }

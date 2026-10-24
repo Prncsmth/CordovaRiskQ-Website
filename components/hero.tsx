@@ -1,4 +1,4 @@
-import { Check, MapPin, Play } from "lucide-react";
+import { Check, Play } from "lucide-react";
 import type { CSSProperties } from "react";
 import { DownloadButton } from "@/components/download-button";
 import { HalloweenHeroScene } from "@/components/halloween/hero-scene";
@@ -8,7 +8,6 @@ import { RotatingText } from "@/components/rotating-text";
 import { buttonStyles } from "@/components/ui";
 import { HERO_CHECKS, HERO_ROTATING } from "@/lib/content";
 import { release } from "@/lib/release";
-import { SITE } from "@/lib/site";
 
 const rise = (delay: number) => ({ "--rise-delay": `${delay}ms` }) as CSSProperties;
 
@@ -25,22 +24,16 @@ export function Hero() {
 
       <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 *:min-w-0 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-          <p
-            className="animate-rise inline-flex items-center gap-2 rounded-full border border-brand/15 bg-white/85 px-3.5 py-1.5 font-mono text-[0.7rem] font-semibold tracking-wider text-brand-dark uppercase shadow-sm sm:text-xs"
-            style={rise(0)}
-          >
-            <MapPin aria-hidden className="size-3.5" />
-            {SITE.locality} · Android app
-          </p>
-
           <h1
             id="hero-heading"
-            className="animate-rise mt-6 font-wordmark text-[min(2.3rem,6.6vw)] leading-[1.04] tracking-tight text-ink uppercase sm:text-[min(2.9rem,6.4vw)] lg:text-[min(2.6rem,3vw)]"
+            className="animate-rise font-wordmark text-[min(2.3rem,6.6vw)] leading-[1.04] tracking-tight text-ink uppercase sm:text-[min(2.9rem,6.4vw)] lg:text-[min(2.6rem,3vw)]"
             style={rise(80)}
           >
             {/* nowrap keeps "Geolocation-Based" on one line. */}
             <span className="block whitespace-nowrap">Geolocation-Based</span>{" "}
-            <span className="block text-balance text-brand">Emergency and Assistance Coordination.</span>
+            <span className="block text-balance text-brand">
+              Emergency and Assistance Coordination.
+            </span>
           </h1>
 
           <p

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Bats, CobwebCorner, Fog } from "@/components/halloween/decor";
+import { Bats, CobwebCorner, Fog, HangingSpider, LurkingEyes } from "@/components/halloween/decor";
 
 /** The red forest behind the hero, with webs, bats and fog. Halloween only. */
 export function HalloweenHeroScene() {
@@ -19,6 +19,8 @@ export function HalloweenHeroScene() {
       <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-[#0c0a0b]" />
       <CobwebCorner corner="tl" />
       <CobwebCorner corner="tr" />
+      <HangingSpider className="top-0 right-[12%] hidden sm:block" />
+      <LurkingEyes className="bottom-[22%] left-[4%]" delay={2} />
       <Bats />
       <Fog />
     </div>
