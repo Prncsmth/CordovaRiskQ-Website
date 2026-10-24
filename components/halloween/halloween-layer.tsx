@@ -6,6 +6,7 @@ import { Countdown } from "@/components/halloween/countdown";
 import { Gate } from "@/components/halloween/gate";
 import { Jumpscare } from "@/components/halloween/jumpscare";
 import { savedSoundChoice } from "@/components/halloween/sound-context";
+import { HALLOWEEN } from "@/lib/halloween";
 
 const noop = () => () => {};
 
@@ -27,6 +28,16 @@ export function HalloweenLayer() {
     return () => {
       if (prev) meta?.setAttribute("content", prev);
     };
+  }, [active]);
+
+  // A tab left open overnight switches back to the official design at the end
+  // of the season (reloading clears the theme, pop-ups and sound in one go).
+  useEffect(() => {
+    if (!active) return;
+    const ms = HALLOWEEN.end.getTime() - Date.now();
+    if (ms <= 0 || ms > 2_000_000_000) return; // beyond what setTimeout can wait
+    const id = window.setTimeout(() => window.location.reload(), ms + 1000);
+    return () => window.clearTimeout(id);
   }, [active]);
 
   if (!active) return null;

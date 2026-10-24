@@ -5,7 +5,8 @@
  */
 export const HALLOWEEN = {
   start: new Date("2026-10-01T00:00:00+08:00"),
-  end: new Date("2026-11-01T00:00:00+08:00"),
+  // Kept through All Saints Day; the official design returns on Nov 2.
+  end: new Date("2026-11-02T00:00:00+08:00"),
   night: new Date("2026-10-31T00:00:00+08:00"),
 } as const;
 

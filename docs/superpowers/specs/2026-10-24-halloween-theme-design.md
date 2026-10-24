@@ -130,8 +130,8 @@ nothing to license and no extra download):
 
 ## Timing (seasonal switch)
 
-- Halloween is on from 2026-10-01 through 2026-10-31 (Asia/Manila), and the
-  normal site returns on 2026-11-01 without anyone changing code. The check runs in the
+- Halloween is on from 2026-10-01 through 2026-11-01 (Asia/Manila), and the
+  normal site returns on 2026-11-02 without anyone changing code. The check runs in the
   browser so a static build still switches on time; the server-rendered page
   should default to the Halloween look during the window to avoid a flash of
   the light theme (builder decides the exact mechanism, e.g. a tiny inline

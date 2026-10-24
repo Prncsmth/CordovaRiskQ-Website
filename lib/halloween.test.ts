@@ -15,10 +15,12 @@ describe("isHalloweenSeason", () => {
     expect(isHalloweenSeason(at("2026-10-01T00:00:00+08:00"))).toBe(true));
   it("is out of season one ms before", () =>
     expect(isHalloweenSeason(at("2026-09-30T23:59:59.999+08:00"))).toBe(false));
-  it("is out of season at Nov 1 00:00 Manila", () =>
-    expect(isHalloweenSeason(at("2026-11-01T00:00:00+08:00"))).toBe(false));
-  it("uses Manila time, not local: Oct 31 20:00 in UTC-8 is already Nov 1 in Manila", () =>
-    expect(isHalloweenSeason(at("2026-10-31T20:00:00-08:00"))).toBe(false));
+  it("is still in season on Nov 1 (All Saints Day)", () =>
+    expect(isHalloweenSeason(at("2026-11-01T23:59:59.999+08:00"))).toBe(true));
+  it("is back to the official design at Nov 2 00:00 Manila", () =>
+    expect(isHalloweenSeason(at("2026-11-02T00:00:00+08:00"))).toBe(false));
+  it("uses Manila time, not local: Nov 1 20:00 in UTC-8 is already Nov 2 in Manila", () =>
+    expect(isHalloweenSeason(at("2026-11-01T20:00:00-08:00"))).toBe(false));
 });
 
 describe("getCountdown", () => {
