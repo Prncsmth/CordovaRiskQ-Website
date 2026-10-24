@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { ClickScares } from "@/components/halloween/click-scares";
 import { Countdown } from "@/components/halloween/countdown";
 import { Gate } from "@/components/halloween/gate";
 import { Jumpscare } from "@/components/halloween/jumpscare";
@@ -35,6 +36,7 @@ export function HalloweenLayer() {
       {gateOpen && <Gate onClose={() => setGateOpen(false)} />}
       <Countdown hidden={gateOpen} />
       <Jumpscare overlayOpen={gateOpen} />
+      <ClickScares disabled={gateOpen} />
     </>
   );
 }

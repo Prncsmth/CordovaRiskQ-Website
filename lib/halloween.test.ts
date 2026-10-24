@@ -103,3 +103,20 @@ describe("HALLOWEEN_THEME_SCRIPT", () => {
   it("keeps the class in season", () => expect(run("2026-10-24T12:00:00+08:00")).toBe(true));
   it("removes the class after Halloween", () => expect(run("2026-11-02T12:00:00+08:00")).toBe(false));
 });
+
+describe("jumpscare memory", () => {
+  it("remembers the jumpscare for this page even when storage is blocked", async () => {
+    const { hasSeenJumpscare, markJumpscareSeen } = await import("./halloween");
+    const blocked = {
+      getItem: () => {
+        throw new Error("blocked");
+      },
+      setItem: () => {
+        throw new Error("blocked");
+      },
+    };
+    expect(hasSeenJumpscare(blocked)).toBe(false);
+    markJumpscareSeen(blocked);
+    expect(hasSeenJumpscare(blocked)).toBe(true);
+  });
+});

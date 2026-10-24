@@ -9,7 +9,7 @@ export function HalloweenHeroScene() {
         src="/halloween/forest.webp"
         alt=""
         fill
-        priority
+        loading="eager"
         sizes="100vw"
         className="hw-forest object-cover"
       />

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useHalloweenSound } from "@/components/halloween/sound-context";
-import { HALLOWEEN_FLAGS, readFlag, shouldJumpscare, writeFlag } from "@/lib/halloween";
+import { playScream } from "@/components/halloween/sound-context";
+import { hasSeenJumpscare, markJumpscareSeen, shouldJumpscare } from "@/lib/halloween";
 
 const DELAY_MS = 2500;
 const GHOST = "/halloween/ghost.webp";
@@ -27,7 +27,6 @@ function inView(id: string) {
  * visitor scrolls past the hero. Never while the download panel is on screen.
  */
 export function Jumpscare({ overlayOpen }: { overlayOpen: boolean }) {
-  const { scream } = useHalloweenSound();
   const [playing, setPlaying] = useState(false);
 
   // Load the image early so she doesn't pop in late.
@@ -45,15 +44,15 @@ export function Jumpscare({ overlayOpen }: { overlayOpen: boolean }) {
       if (entry.isIntersecting) return;
       timer = window.setTimeout(() => {
         const ok = shouldJumpscare({
-          seen: readFlag(storage(), HALLOWEEN_FLAGS.jumpscareSeen) === "1",
+          seen: hasSeenJumpscare(storage()),
           reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
           overlayOpen,
         });
         // If the download panel is on screen, wait for the next time the hero leaves view.
         if (!ok || inView("download")) return;
-        writeFlag(storage(), HALLOWEEN_FLAGS.jumpscareSeen, "1");
+        markJumpscareSeen(storage());
         setPlaying(true);
-        scream();
+        playScream();
         observer.disconnect();
       }, DELAY_MS);
     });
@@ -62,7 +61,7 @@ export function Jumpscare({ overlayOpen }: { overlayOpen: boolean }) {
       window.clearTimeout(timer);
       observer.disconnect();
     };
-  }, [overlayOpen, scream]);
+  }, [overlayOpen]);
 
   useEffect(() => {
     if (!playing) return;

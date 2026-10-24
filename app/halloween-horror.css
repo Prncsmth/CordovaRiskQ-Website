@@ -138,24 +138,33 @@ html.halloween main section [class*="rounded-3xl"][class*="border"]:hover {
   box-shadow: inset 0 0 40px rgb(0 0 0 / 0.5), 0 0 32px rgb(209 31 42 / 0.35);
 }
 
-/* ---------- Glossy blood ---------- */
-/* The blood runs down slowly when it first appears. */
-.hw-blood-run {
-  animation: hw-blood-run 3.5s cubic-bezier(0.35, 0, 0.25, 1) 0.3s both;
+/* ---------- Flowing blood ---------- */
+/* Each drip oozes longer, lets go of a drop, snaps back and fills again. */
+.hw-ooze {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  animation: hw-ooze var(--dur) cubic-bezier(0.45, 0, 0.6, 1) var(--delay) infinite;
 }
-@keyframes hw-blood-run {
-  from { clip-path: inset(0 0 100% 0); }
-  to { clip-path: inset(0 0 0 0); }
+@keyframes hw-ooze {
+  0% { transform: scaleY(0.35); }
+  72% { transform: scaleY(1.08); }
+  76% { transform: scaleY(1.12) scaleX(0.92); }
+  80% { transform: scaleY(0.55); }
+  100% { transform: scaleY(0.35); }
 }
-.hw-bead {
+.hw-fall {
   opacity: 0;
   transform-box: fill-box;
-  animation: hw-bead-fall 5.5s ease-in calc(var(--drip-delay) + 4s) infinite;
+  transform-origin: 50% 0;
+  animation: hw-fall var(--dur) linear var(--delay) infinite;
 }
-@keyframes hw-bead-fall {
-  0% { opacity: 0; transform: translateY(-4px) scale(0.6); }
-  12%, 55% { opacity: 1; transform: translateY(0) scale(1); }
-  85%, 100% { opacity: 0; transform: translateY(90px) scaleY(1.3); }
+@keyframes hw-fall {
+  0%, 74% { opacity: 0; transform: translateY(0) scale(0.8, 0.8); }
+  76% { opacity: 1; transform: translateY(6px) scale(1, 1); }
+  /* Accelerate down the screen like a real falling drop, stretching as it goes. */
+  84% { opacity: 1; transform: translateY(160px) scale(0.85, 1.35); }
+  92% { opacity: 0.9; transform: translateY(620px) scale(0.75, 1.6); }
+  96%, 100% { opacity: 0; transform: translateY(1100px) scale(0.7, 1.7); }
 }
 
 /* ---------- Hanging spider ---------- */
@@ -213,6 +222,53 @@ html.halloween main section [class*="rounded-3xl"][class*="border"]:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hw-blood-run, .hw-bead, .hw-spider, .hw-spider-body, .hw-eyes, .hw-eyes span,
+  .hw-ooze, .hw-fall, .hw-spider, .hw-spider-body, .hw-eyes, .hw-eyes span,
   html.halloween #hero-heading > span.text-brand { animation: none; }
+}
+
+/* ---------- Click pop-up scares ---------- */
+.hw-pop {
+  animation: hw-pop-dim 1.1s ease-out forwards;
+}
+@keyframes hw-pop-dim {
+  0% { background: rgb(0 0 0 / 0); }
+  10% { background: rgb(40 0 4 / 0.55); }
+  70% { background: rgb(0 0 0 / 0.4); }
+  100% { background: rgb(0 0 0 / 0); }
+}
+.hw-pop-box {
+  position: relative;
+  width: min(78vw, 460px);
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 18px;
+  background: #050203;
+  border: 2px solid rgb(209 31 42 / 0.7);
+  box-shadow: 0 0 0 6px rgb(0 0 0 / 0.6), 0 0 60px rgb(209 31 42 / 0.7), inset 0 0 60px rgb(0 0 0 / 0.8);
+  animation: hw-pop-in 1.1s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+@keyframes hw-pop-in {
+  0% { transform: scale(0.15) rotate(-6deg); opacity: 0; }
+  12% { transform: scale(1.12) rotate(2deg); opacity: 1; }
+  18% { transform: scale(0.98) translate(-8px, 4px); }
+  24% { transform: scale(1.04) translate(8px, -6px); }
+  30% { transform: scale(1) translate(-5px, 3px); }
+  36% { transform: scale(1) translate(0, 0); }
+  50% { opacity: 1; }
+  53% { opacity: 0.5; }
+  56% { opacity: 1; }
+  80% { transform: scale(1.02); opacity: 1; }
+  100% { transform: scale(1.1); opacity: 0; }
+}
+.hw-pop-figure {
+  background: url("/halloween/ghost.webp") center / cover no-repeat #050203;
+  filter: contrast(1.25) saturate(0.8) brightness(0.95);
+}
+.hw-pop-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.25;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27160%27 height=%27160%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.85%27 numOctaves=%272%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27/%3E%3C/svg%3E");
+  animation: hw-grain 0.25s steps(3) infinite;
 }

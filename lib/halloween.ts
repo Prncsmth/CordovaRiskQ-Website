@@ -61,5 +61,17 @@ export function writeFlag(
   }
 }
 
+// Also remembered in memory, so blocked storage can't make the scare repeat.
+let jumpscareSeenThisPage = false;
+
+export function hasSeenJumpscare(storage: Pick<Storage, "getItem"> | null): boolean {
+  return jumpscareSeenThisPage || readFlag(storage, HALLOWEEN_FLAGS.jumpscareSeen) === "1";
+}
+
+export function markJumpscareSeen(storage: Pick<Storage, "setItem"> | null): void {
+  jumpscareSeenThisPage = true;
+  writeFlag(storage, HALLOWEEN_FLAGS.jumpscareSeen, "1");
+}
+
 /** Runs before paint so the page never flashes the wrong theme. */
 export const HALLOWEEN_THEME_SCRIPT = `try{var n=Date.now(),c=document.documentElement.classList;if(n>=${HALLOWEEN.start.getTime()}&&n<${HALLOWEEN.end.getTime()})c.add("halloween");else c.remove("halloween")}catch(e){}`;

@@ -269,3 +269,13 @@ html.halloween #top > svg {
   66% { background-position: 30px -35px; }
   100% { background-position: 0 0; }
 }
+
+/* Brand red is too dark for small text on black; use a brighter red for text only. */
+html.halloween .text-brand,
+html.halloween .hover\:text-brand:hover,
+html.halloween .text-brand-dark {
+  color: #ff4d5e;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hw-gate-title { animation: none; }
+}
