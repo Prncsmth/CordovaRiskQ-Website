@@ -66,53 +66,93 @@ function rng(seed: number) {
 }
 
 const BLOOD_W = 1600;
-const BLOOD_H = 120;
+const BLOOD_H = 200;
 
-type LiveDrip = { d: string; x: number; tipY: number; w: number; dur: number; delay: number; lean: number };
+type LiveDrip = {
+  stem: string;
+  beads: { cx: number; cy: number; rx: number; ry: number }[];
+  x: number;
+  tipY: number;
+  w: number;
+  len: number;
+  dur: number;
+  delay: number;
+};
 
-/** The lumpy band of blood along the bottom of the navbar, plus drips hanging from it. */
+/**
+ * Real-looking spilled blood: an uneven splash along the top (thick pools and
+ * thin smears), very thin drips that bead up as they run, heavy teardrop
+ * tips, and fine spatter around it.
+ */
 function buildNavBlood(seed: number) {
   const r = rng(seed);
-  // Band: a wavy lower edge.
-  let band = `M0 -4 L${BLOOD_W} -4 L${BLOOD_W} 9`;
-  for (let x = BLOOD_W; x > 0; ) {
-    const step = 40 + r() * 90;
-    const nx = Math.max(0, x - step);
-    const y = 6 + r() * 10;
-    band += ` Q${(x - step / 2).toFixed(1)} ${(y + 4 + r() * 4).toFixed(1)} ${nx.toFixed(1)} ${y.toFixed(1)}`;
-    x = nx;
-  }
-  band += " Z";
 
-  const drips: LiveDrip[] = [];
-  for (let x = 30 + r() * 40; x < BLOOD_W - 30; x += 55 + r() * 95) {
-    const long = r() < 0.5;
-    const w = long ? 8 + r() * 8 : 5 + r() * 6;
-    const len = long ? 50 + r() * 60 : 14 + r() * 24;
-    const lean = (r() - 0.5) * (long ? 14 : 5);
-    const top = 6;
-    const tipX = x + lean;
-    const tipY = top + len;
-    const neck = w * (0.45 + r() * 0.2);
-    const bulb = w * (0.7 + r() * 0.3);
-    const wob = (r() - 0.5) * 6;
-    // Wide where it leaves the band, a thin wobbling stem, a heavy drop at the tip.
-    const d =
-      `M${(x - w * 1.3).toFixed(1)} ${top}` +
-      ` C${(x - w * 0.4).toFixed(1)} ${top} ${(x - neck / 2 + wob).toFixed(1)} ${(top + len * 0.4).toFixed(1)} ${(tipX - neck / 2).toFixed(1)} ${(tipY - w * 0.8).toFixed(1)}` +
-      ` C${(tipX - bulb * 1.25).toFixed(1)} ${(tipY - w * 0.2).toFixed(1)} ${(tipX - bulb).toFixed(1)} ${(tipY + bulb * 1.15).toFixed(1)} ${tipX.toFixed(1)} ${(tipY + bulb * 1.15).toFixed(1)}` +
-      ` C${(tipX + bulb).toFixed(1)} ${(tipY + bulb * 1.15).toFixed(1)} ${(tipX + bulb * 1.25).toFixed(1)} ${(tipY - w * 0.2).toFixed(1)} ${(tipX + neck / 2).toFixed(1)} ${(tipY - w * 0.8).toFixed(1)}` +
-      ` C${(x + neck / 2 + wob * 0.6).toFixed(1)} ${(top + len * 0.4).toFixed(1)} ${(x + w * 0.4).toFixed(1)} ${top} ${(x + w * 1.3).toFixed(1)} ${top} Z`;
-    drips.push({ d, x: tipX, tipY: tipY + bulb * 0.55, w: bulb, dur: 5 + r() * 6, delay: -r() * 10, lean });
+  // Where the drips hang; the splash is thicker (a pool) above each one.
+  const dripXs: number[] = [];
+  for (let x = 40 + r() * 60; x < BLOOD_W - 40; x += 70 + r() * 130) dripXs.push(x);
+  const poolDepth = (x: number) =>
+    dripXs.reduce((m, dx) => Math.max(m, 18 * Math.exp(-(((x - dx) / 34) ** 2))), 0);
+
+  // Uneven lower edge of the splash.
+  const pts: [number, number][] = [];
+  for (let x = BLOOD_W; x >= 0; x -= 14) {
+    const base = 3 + r() * 5 + (r() < 0.12 ? r() * 9 : 0);
+    pts.push([x, base + poolDepth(x)]);
   }
-  return { band, drips };
+  let band = `M0 -4 L${BLOOD_W} -4 L${BLOOD_W} ${pts[0][1].toFixed(1)}`;
+  for (let i = 1; i < pts.length; i++) {
+    const [px, py] = pts[i - 1];
+    const [x, y] = pts[i];
+    band += ` Q${px.toFixed(1)} ${py.toFixed(1)} ${((px + x) / 2).toFixed(1)} ${((py + y) / 2).toFixed(1)}`;
+  }
+  band += ` L0 ${pts[pts.length - 1][1].toFixed(1)} Z`;
+
+  const drips: LiveDrip[] = dripXs.map((x) => {
+    const top = poolDepth(x) - 2;
+    const long = r() < 0.6;
+    const w = long ? 2.6 + r() * 3 : 3.5 + r() * 3;
+    const len = long ? 55 + r() * 110 : 14 + r() * 30;
+    const curve = (r() - 0.5) * (long ? 12 : 4);
+    const tipX = x + curve * 0.6;
+    const tipY = top + len;
+    const tear = w * (1.5 + r() * 0.6);
+    // A thin stem flaring into the pool, then a long teardrop at the end.
+    const stem =
+      `M${(x - w * 2.2).toFixed(1)} ${(top - 3).toFixed(1)}` +
+      ` C${(x - w * 0.6).toFixed(1)} ${top.toFixed(1)} ${(x - w / 2 + curve).toFixed(1)} ${(top + len * 0.5).toFixed(1)} ${(tipX - w * 0.42).toFixed(1)} ${tipY.toFixed(1)}` +
+      ` L${(tipX + w * 0.42).toFixed(1)} ${tipY.toFixed(1)}` +
+      ` C${(x + w / 2 + curve).toFixed(1)} ${(top + len * 0.5).toFixed(1)} ${(x + w * 0.6).toFixed(1)} ${top.toFixed(1)} ${(x + w * 2.2).toFixed(1)} ${(top - 3).toFixed(1)} Z`;
+    // Beads where the blood gathers along long drips.
+    const beads = long
+      ? Array.from({ length: 1 + Math.floor(r() * 2) }, () => {
+          const t = 0.35 + r() * 0.4;
+          return { cx: x + curve * t * 0.8, cy: top + len * t, rx: w * 0.85, ry: w * 1.3 };
+        })
+      : [];
+    return { stem, beads, x: tipX, tipY: tipY + tear * 0.5, w: tear, len, dur: 6 + r() * 7, delay: -r() * 12 };
+  });
+
+  // Fine spatter flung around the splash.
+  const spatter = Array.from({ length: 46 }, () => ({
+    cx: r() * BLOOD_W,
+    cy: 6 + r() * 34,
+    rr: 0.8 + r() ** 2 * 3.2,
+  }));
+
+  return { band, drips, spatter };
 }
 
 const NAV_BLOOD = buildNavBlood(20261031);
 
+/** A drop of size t centred on the origin, pointed at the top where it hangs from the drip. */
+function teardrop(t: number) {
+  const f = (n: number) => (n * t).toFixed(2);
+  return `M0 ${f(-1.7)} C${f(0.35)} ${f(-1.0)} ${f(1.0)} ${f(-0.4)} ${f(0.95)} ${f(0.25)} C${f(0.9)} ${f(0.95)} ${f(0.45)} ${f(1.15)} 0 ${f(1.15)} C${f(-0.45)} ${f(1.15)} ${f(-0.9)} ${f(0.95)} ${f(-0.95)} ${f(0.25)} C${f(-1.0)} ${f(-0.4)} ${f(-0.35)} ${f(-1.0)} 0 ${f(-1.7)} Z`;
+}
+
 /**
- * Wet blood oozing from the bottom of the navbar. Each drip slowly stretches,
- * lets a drop go that falls down the screen, then pulls back and fills again.
+ * Spilled blood running from the bottom of the navbar. Each drip slowly
+ * stretches, lets a drop go that falls down the screen, then fills again.
  */
 export function BloodDrips({ className = "" }: { className?: string }) {
   const id = "hw-blood";
@@ -125,48 +165,50 @@ export function BloodDrips({ className = "" }: { className?: string }) {
     >
       <defs>
         <linearGradient id={`${id}-fill`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#5e0007" />
-          <stop offset="18%" stopColor="#a8000b" />
-          <stop offset="100%" stopColor="#7a0008" />
+          <stop offset="0%" stopColor="#3d0002" />
+          <stop offset="12%" stopColor="#6e0005" />
+          <stop offset="45%" stopColor="#930009" />
+          <stop offset="100%" stopColor="#7a0006" />
         </linearGradient>
-        <radialGradient id={`${id}-drop`} cx="35%" cy="30%" r="70%">
-          <stop offset="0%" stopColor="#ff8a8a" />
-          <stop offset="25%" stopColor="#c4000e" />
-          <stop offset="100%" stopColor="#6a0008" />
+        <radialGradient id={`${id}-drop`} cx="38%" cy="30%" r="70%">
+          <stop offset="0%" stopColor="#e86060" />
+          <stop offset="20%" stopColor="#a8000b" />
+          <stop offset="100%" stopColor="#4a0004" />
         </radialGradient>
-        {/* Wet shine: light the shape as if it were a raised, glossy liquid. */}
-        <filter id={`${id}-gloss`} x="-5%" y="-20%" width="110%" height="200%">
-          <feGaussianBlur in="SourceAlpha" stdDeviation="2.4" result="blur" />
-          <feSpecularLighting in="blur" surfaceScale="7" specularConstant="1.15" specularExponent="30" lightingColor="#ffe0e0" result="spec">
-            <fePointLight x="-300" y="-400" z="300" />
+        {/* Subtle wet shine, like real blood rather than paint. */}
+        <filter id={`${id}-gloss`} x="-5%" y="-20%" width="110%" height="220%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1.6" result="blur" />
+          <feSpecularLighting in="blur" surfaceScale="5" specularConstant="0.85" specularExponent="38" lightingColor="#ffd6d6" result="spec">
+            <fePointLight x="-300" y="-500" z="260" />
           </feSpecularLighting>
           <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn" />
-          <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.8" k4="0" />
+          <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.7" k4="0" />
         </filter>
       </defs>
       <g filter={`url(#${id}-gloss)`} fill={`url(#${id}-fill)`}>
         <path d={NAV_BLOOD.band} />
+        {NAV_BLOOD.spatter.map((s, i) => (
+          <circle key={`s${i}`} cx={s.cx} cy={s.cy} r={s.rr} />
+        ))}
         {NAV_BLOOD.drips.map((dr, i) => (
-          <path
-            key={i}
-            className="hw-ooze"
-            d={dr.d}
-            style={{ "--dur": `${dr.dur}s`, "--delay": `${dr.delay}s` } as CSSProperties}
-          />
+          <g key={i} className="hw-run" style={{ "--dur": `${dr.dur}s`, "--delay": `${dr.delay}s` } as CSSProperties}>
+            <path d={dr.stem} />
+            {dr.beads.map((b, j) => (
+              <ellipse key={j} cx={b.cx} cy={b.cy} rx={b.rx} ry={b.ry} />
+            ))}
+          </g>
         ))}
       </g>
-      {/* Falling drops, outside the lighting filter so they stay cheap to draw. */}
+      {/* The drop at the end of each drip: it rides down as the drip runs, then breaks off and falls. */}
       {NAV_BLOOD.drips.map((dr, i) => (
-        <ellipse
-          key={i}
-          className="hw-fall"
-          cx={dr.x}
-          cy={dr.tipY}
-          rx={dr.w * 0.6}
-          ry={dr.w * 0.8}
-          fill={`url(#${id}-drop)`}
-          style={{ "--dur": `${dr.dur}s`, "--delay": `${dr.delay}s` } as CSSProperties}
-        />
+        <g key={i} transform={`translate(${dr.x.toFixed(1)} ${dr.tipY.toFixed(1)})`}>
+          <path
+            className="hw-tip"
+            d={teardrop(dr.w)}
+            fill={`url(#${id}-drop)`}
+            style={{ "--dur": `${dr.dur}s`, "--delay": `${dr.delay}s`, "--len": `${(dr.len * 0.7).toFixed(1)}px` } as CSSProperties}
+          />
+        </g>
       ))}
     </svg>
   );

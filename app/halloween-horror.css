@@ -76,7 +76,7 @@ html.halloween header nav a:hover {
   inset-inline: 0;
   top: calc(100% - 2px);
   width: 100%;
-  height: 60px;
+  height: 100px;
 }
 
 /* ---------- Every section gets the hero's forest backdrop ---------- */
@@ -139,32 +139,38 @@ html.halloween main section [class*="rounded-3xl"][class*="border"]:hover {
 }
 
 /* ---------- Flowing blood ---------- */
-/* Each drip oozes longer, lets go of a drop, snaps back and fills again. */
-.hw-ooze {
+/*
+ * Like real blood: the thin stream creeps down (slowly, then faster as it gets
+ * heavy) with a drop riding at its end. The drop stretches, breaks off and
+ * falls down the screen; the thread snaps back and a new drop fills again.
+ */
+.hw-run {
   transform-box: fill-box;
-  transform-origin: 50% 0;
-  animation: hw-ooze var(--dur) cubic-bezier(0.45, 0, 0.6, 1) var(--delay) infinite;
+  animation: hw-run var(--dur) linear var(--delay) infinite;
 }
-@keyframes hw-ooze {
-  0% { transform: scaleY(0.35); }
-  72% { transform: scaleY(1.08); }
-  76% { transform: scaleY(1.12) scaleX(0.92); }
-  80% { transform: scaleY(0.55); }
-  100% { transform: scaleY(0.35); }
+@keyframes hw-run {
+  0% { clip-path: inset(0 0 72% 0); animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.6); }
+  72% { clip-path: inset(0 0 0 0); }
+  77% { clip-path: inset(0 0 0 0); animation-timing-function: cubic-bezier(0.2, 0.8, 0.3, 1); }
+  84% { clip-path: inset(0 0 74% 0); }
+  100% { clip-path: inset(0 0 72% 0); }
 }
-.hw-fall {
-  opacity: 0;
+.hw-tip {
   transform-box: fill-box;
-  transform-origin: 50% 0;
-  animation: hw-fall var(--dur) linear var(--delay) infinite;
+  transform-origin: 50% 20%;
+  animation: hw-tip var(--dur) linear var(--delay) infinite;
 }
-@keyframes hw-fall {
-  0%, 74% { opacity: 0; transform: translateY(0) scale(0.8, 0.8); }
-  76% { opacity: 1; transform: translateY(6px) scale(1, 1); }
-  /* Accelerate down the screen like a real falling drop, stretching as it goes. */
-  84% { opacity: 1; transform: translateY(160px) scale(0.85, 1.35); }
-  92% { opacity: 0.9; transform: translateY(620px) scale(0.75, 1.6); }
-  96%, 100% { opacity: 0; transform: translateY(1100px) scale(0.7, 1.7); }
+@keyframes hw-tip {
+  0% { transform: translateY(calc(var(--len) * -1)) scale(0.55); opacity: 1; animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.6); }
+  72% { transform: translateY(0) scale(1); }
+  /* Getting heavy: the drop sags and stretches before it lets go. */
+  77% { transform: translateY(5px) scale(0.92, 1.22); animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5); }
+  /* Falling, faster and faster, stretched by the speed. */
+  86% { transform: translateY(240px) scale(0.85, 1.45); opacity: 1; }
+  95% { transform: translateY(1100px) scale(0.8, 1.6); opacity: 0; }
+  95.01% { transform: translateY(calc(var(--len) * -1)) scale(0.2); opacity: 0; }
+  /* A new drop slowly fills at the end of the thread. */
+  100% { transform: translateY(calc(var(--len) * -1)) scale(0.55); opacity: 1; }
 }
 
 /* ---------- Hanging spider ---------- */
@@ -222,7 +228,7 @@ html.halloween main section [class*="rounded-3xl"][class*="border"]:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hw-ooze, .hw-fall, .hw-spider, .hw-spider-body, .hw-eyes, .hw-eyes span,
+  .hw-run, .hw-tip, .hw-spider, .hw-spider-body, .hw-eyes, .hw-eyes span,
   html.halloween #hero-heading > span.text-brand { animation: none; }
 }
 
@@ -271,4 +277,22 @@ html.halloween main section [class*="rounded-3xl"][class*="border"]:hover {
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%27160%27 height=%27160%27%3E%3Cfilter id=%27n%27%3E%3CfeTurbulence type=%27fractalNoise%27 baseFrequency=%270.85%27 numOctaves=%272%27 stitchTiles=%27stitch%27/%3E%3C/filter%3E%3Crect width=%27100%25%27 height=%27100%25%27 filter=%27url(%23n)%27/%3E%3C/svg%3E");
   animation: hw-grain 0.25s steps(3) infinite;
+}
+
+/* The knife-killer scene replaces the forest behind a few sections. */
+html.halloween main > section:not(#top):not(.bg-brand):is(#download, #responders, #faq)::before {
+  /* Whole figure on the right, fading softly into the dark page. */
+  background: url("/halloween/slasher.svg") right -6vw top 60px / min(1100px, 150vw) auto no-repeat;
+  -webkit-mask: radial-gradient(ellipse 60% 55% at 72% 42%, #000 45%, transparent 100%);
+  mask: radial-gradient(ellipse 60% 55% at 72% 42%, #000 45%, transparent 100%);
+  filter: saturate(1.1);
+  transform: none;
+  opacity: 0.9;
+}
+@media (max-width: 640px) {
+  html.halloween main > section:not(#top):not(.bg-brand):is(#download, #responders, #faq)::before {
+    background-position: right -40vw top 40px;
+    -webkit-mask: radial-gradient(ellipse 90% 40% at 60% 25%, #000 40%, transparent 100%);
+    mask: radial-gradient(ellipse 90% 40% at 60% 25%, #000 40%, transparent 100%);
+  }
 }
