@@ -103,6 +103,9 @@ export function JackOLantern({ className }: { className?: string }) {
           <feComposite in="g2" in2="SourceGraphic" operator="in" result="tex" />
           <feBlend in="SourceGraphic" in2="tex" mode="multiply" />
         </filter>
+        <filter id={`${id}-soft`}>
+          <feGaussianBlur stdDeviation="2.5" />
+        </filter>
         <filter id={`${id}-bloom`} x="-40%" y="-40%" width="180%" height="180%">
           <feGaussianBlur stdDeviation="9" />
         </filter>
@@ -130,11 +133,11 @@ export function JackOLantern({ className }: { className?: string }) {
         ))}
       </g>
       {/* Deep grooves between the lobes */}
-      <g clipPath={u("body")} fill="none" stroke="#1a0104" strokeLinecap="round" opacity="0.75">
-        <path d="M122 92 C92 160 92 300 124 362" strokeWidth="5" />
-        <path d="M278 92 C308 160 308 300 276 362" strokeWidth="5" />
-        <path d="M168 76 C150 150 150 300 168 370" strokeWidth="3.5" />
-        <path d="M232 76 C250 150 250 300 232 370" strokeWidth="3.5" />
+      <g clipPath={u("body")} fill="none" stroke="#1a0104" strokeLinecap="round" opacity="0.6" filter={u("soft")}>
+        <path d="M122 92 C92 160 92 300 124 362" strokeWidth="7" />
+        <path d="M278 92 C308 160 308 300 276 362" strokeWidth="7" />
+        <path d="M168 76 C156 110 154 130 156 140 M156 330 C158 350 162 362 168 370" strokeWidth="5" />
+        <path d="M232 76 C244 110 246 130 244 140 M244 330 C242 350 238 362 232 370" strokeWidth="5" />
       </g>
 
       {/* Light spilling over the carved face from inside */}

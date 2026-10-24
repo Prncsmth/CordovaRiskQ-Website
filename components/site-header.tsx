@@ -1,4 +1,5 @@
 import { Download } from "lucide-react";
+import { SoundToggle } from "@/components/halloween/sound-toggle";
 import { MobileNav } from "@/components/mobile-nav";
 import { Logo } from "@/components/ui";
 import { NAV_LINKS, SITE } from "@/lib/site";
@@ -34,6 +35,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-1 sm:gap-2">
+          <SoundToggle />
           {/* Always usable: jumps to the download panel. */}
           <a
             href="#download"

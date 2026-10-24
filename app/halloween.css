@@ -199,3 +199,73 @@ html.halloween #top > svg {
   .hw-bats { display: none; }
   .hw-fog, .hw-flicker { animation: none; }
 }
+
+/* ---------- Gate pop-up ---------- */
+.hw-gate { animation: hw-fade-in 0.5s ease-out; }
+.hw-gate-out { animation: hw-fade-out 0.6s ease-in forwards; }
+.hw-gate-title { text-shadow: 0 0 18px rgb(209 31 42 / 0.8), 0 0 2px #fff; animation: hw-flicker 3.2s infinite steps(1, end); }
+@keyframes hw-fade-in { from { opacity: 0; } }
+@keyframes hw-fade-out { to { opacity: 0; } }
+
+/* ---------- Countdown ---------- */
+.hw-countdown { animation: hw-slide-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 1.5s both; }
+@keyframes hw-slide-up { from { opacity: 0; transform: translateY(30px); } }
+
+/* ---------- Jumpscare ---------- */
+.hw-scare { animation: hw-scare-life 1.7s linear forwards; }
+@keyframes hw-scare-life {
+  0%, 82% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.hw-scare-fig {
+  filter: contrast(1.25) saturate(0.85) brightness(1.05);
+  animation: hw-lunge 1.7s cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+}
+@keyframes hw-lunge {
+  0% { transform: scale(0.25) rotate(4deg); opacity: 0; }
+  6% { opacity: 1; }
+  26% { transform: scale(1.18) rotate(-2deg); }
+  34% { transform: scale(1.08) rotate(1deg); }
+  44% { opacity: 1; }
+  46% { opacity: 0.4; }
+  48% { opacity: 1; }
+  60% { opacity: 0.7; }
+  62% { opacity: 1; }
+  100% { transform: scale(1.14) rotate(0deg); }
+}
+.hw-scare-shake { animation: hw-shake 0.4s linear 0.3s 1; }
+@keyframes hw-shake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-12px, 6px); }
+  20% { transform: translate(10px, -8px); }
+  30% { transform: translate(-8px, -10px); }
+  40% { transform: translate(12px, 8px); }
+  50% { transform: translate(-10px, 4px); }
+  60% { transform: translate(8px, -6px); }
+  70% { transform: translate(-6px, 10px); }
+  80% { transform: translate(6px, -4px); }
+  90% { transform: translate(-4px, 2px); }
+}
+.hw-scare-flash {
+  background: radial-gradient(circle, rgb(209 31 42 / 0.15), rgb(138 10 18 / 0.85));
+  mix-blend-mode: multiply;
+  animation: hw-flash 1.7s linear forwards;
+}
+@keyframes hw-flash {
+  0%, 20% { opacity: 0; }
+  24% { opacity: 1; background-color: rgb(255 0 0 / 0.5); }
+  30% { opacity: 0.6; background-color: transparent; }
+  100% { opacity: 0.6; }
+}
+.hw-scare-grain {
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: hw-grain 0.25s steps(3) infinite;
+}
+@keyframes hw-grain {
+  0% { background-position: 0 0; }
+  33% { background-position: -40px 25px; }
+  66% { background-position: 30px -35px; }
+  100% { background-position: 0 0; }
+}

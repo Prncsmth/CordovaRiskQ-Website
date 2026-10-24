@@ -1,5 +1,6 @@
 import { AppGuideSection } from "@/components/app-guide";
 import { DownloadSection } from "@/components/download-section";
+import { HalloweenLayer } from "@/components/halloween/halloween-layer";
 import { Hero } from "@/components/hero";
 import {
   AboutSection,
@@ -36,6 +37,7 @@ export default function HomePage() {
         <FaqSection />
       </main>
       <SiteFooter />
+      <HalloweenLayer />
     </>
   );
 }
