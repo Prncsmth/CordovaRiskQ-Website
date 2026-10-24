@@ -102,3 +102,100 @@ html.halloween ::selection {
 html:not(.halloween) .hw-only {
   display: none !important;
 }
+
+/* ---------- Hero scene ---------- */
+html.halloween #top .bg-dots,
+html.halloween #top > svg {
+  display: none;
+}
+.hw-forest {
+  filter: blur(1.5px) saturate(1.25) contrast(1.1);
+  transform: scale(1.04);
+}
+
+/* Candle flicker: irregular so it feels like a real flame. */
+@keyframes hw-flicker {
+  0%, 100% { opacity: 1; }
+  8% { opacity: 0.82; }
+  12% { opacity: 0.97; }
+  31% { opacity: 0.76; }
+  34% { opacity: 0.94; }
+  52% { opacity: 0.85; }
+  57% { opacity: 1; }
+  73% { opacity: 0.8; }
+  77% { opacity: 0.96; }
+}
+.hw-flicker {
+  animation: hw-flicker 2.4s infinite steps(1, end);
+}
+.hw-pumpkin {
+  filter: drop-shadow(0 20px 40px rgb(0 0 0 / 0.7));
+}
+
+/* Bats */
+.hw-bat {
+  position: absolute;
+  left: 0;
+  aspect-ratio: 5 / 2;
+  opacity: 0;
+  animation: hw-bat-fly var(--bat-dur) linear var(--bat-delay) infinite;
+}
+.hw-bat-wings {
+  width: 100%;
+  height: 100%;
+  fill: #050203;
+  filter: drop-shadow(0 0 6px rgb(209 31 42 / 0.35));
+  animation: hw-bat-flap 0.18s ease-in-out infinite alternate;
+  transform-origin: 50% 60%;
+}
+@keyframes hw-bat-flap {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0.25) translateY(10%); }
+}
+@keyframes hw-bat-fly {
+  0% { opacity: 0; transform: translate(calc(var(--bat-dir) * -10vw + (1 - var(--bat-dir)) * 55vw), 0) scaleX(var(--bat-dir)); }
+  4% { opacity: 1; }
+  25% { transform: translate(calc(var(--bat-dir) * 18vw + (1 - var(--bat-dir)) * 55vw), -30px) scaleX(var(--bat-dir)); }
+  50% { transform: translate(calc(var(--bat-dir) * 45vw + (1 - var(--bat-dir)) * 55vw), 20px) scaleX(var(--bat-dir)); }
+  75% { transform: translate(calc(var(--bat-dir) * 75vw + (1 - var(--bat-dir)) * 55vw), -15px) scaleX(var(--bat-dir)); }
+  60%, 96% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(var(--bat-dir) * 110vw + (1 - var(--bat-dir)) * 55vw), 0) scaleX(var(--bat-dir)); }
+}
+
+/* Fog */
+.hw-fog {
+  position: absolute;
+  bottom: -30%;
+  left: -50%;
+  width: 200%;
+  height: 160%;
+  background:
+    radial-gradient(40% 50% at 20% 60%, rgb(200 170 170 / 0.16), transparent 70%),
+    radial-gradient(35% 45% at 55% 70%, rgb(180 140 140 / 0.14), transparent 70%),
+    radial-gradient(45% 50% at 85% 55%, rgb(210 180 180 / 0.12), transparent 70%);
+  filter: blur(18px);
+}
+.hw-fog-a { animation: hw-fog-drift 38s linear infinite alternate; }
+.hw-fog-b { animation: hw-fog-drift 52s linear infinite alternate-reverse; opacity: 0.8; bottom: -45%; }
+@keyframes hw-fog-drift {
+  from { transform: translateX(-12%); }
+  to { transform: translateX(12%); }
+}
+
+/* Cobweb corners from the real photo */
+.hw-web {
+  width: min(42vw, 340px);
+  aspect-ratio: 1;
+  background: url("/halloween/cobweb.webp") center / cover no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+.hw-web-tl { top: 0; left: 0; mask: radial-gradient(circle at 0 0, #000 30%, transparent 72%); }
+.hw-web-tr { top: 0; right: 0; transform: scaleX(-1); mask: radial-gradient(circle at 0 0, #000 30%, transparent 72%); }
+.hw-web-bl { bottom: 0; left: 0; transform: scaleY(-1); mask: radial-gradient(circle at 0 0, #000 30%, transparent 72%); }
+.hw-web-br { bottom: 0; right: 0; transform: scale(-1); mask: radial-gradient(circle at 0 0, #000 30%, transparent 72%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hw-bats { display: none; }
+  .hw-fog, .hw-flicker { animation: none; }
+}

@@ -1,6 +1,8 @@
 import { Check, MapPin, Play } from "lucide-react";
 import type { CSSProperties } from "react";
 import { DownloadButton } from "@/components/download-button";
+import { HalloweenHeroScene } from "@/components/halloween/hero-scene";
+import { PumpkinButton } from "@/components/halloween/pumpkin-button";
 import { HeroMapPhone, HeroPhone } from "@/components/hero-phone";
 import { RotatingText } from "@/components/rotating-text";
 import { buttonStyles } from "@/components/ui";
@@ -19,6 +21,7 @@ export function Hero() {
     >
       <div aria-hidden className="bg-dots absolute inset-0 -z-10" />
       <HeroRings />
+      <HalloweenHeroScene />
 
       <div className="mx-auto grid max-w-6xl items-center gap-6 px-4 *:min-w-0 pt-14 pb-16 sm:px-6 sm:pt-20 lg:grid-cols-[1.05fr_1fr] lg:gap-4 lg:pt-16 lg:pb-20">
         <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -85,6 +88,7 @@ export function Hero() {
           <div className="relative z-10">
             <HeroPhone />
           </div>
+          <PumpkinButton className="hw-only absolute -bottom-6 left-0 z-20 w-[38%] sm:w-[32%] lg:-bottom-10 lg:-left-[8%] lg:w-[40%]" />
         </div>
       </div>
     </section>
