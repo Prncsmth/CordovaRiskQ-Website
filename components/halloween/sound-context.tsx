@@ -66,22 +66,6 @@ export function playScream() {
   if (enabled) getHalloweenAudio()?.scream();
 }
 
-/**
- * The click pop-up sound: a deep boom, a scream and a hiss together. The click
- * itself lets the browser play sound, so this also turns the lullaby back on
- * after a reload, unless the visitor chose to enter quietly.
- */
-export function playPopScare() {
-  if (savedSoundChoice() === "quiet") return;
-  if (!enabled) setEnabled(true);
-  const audio = getHalloweenAudio();
-  if (!audio) return;
-  void audio.unlock();
-  audio.sting();
-  audio.scream();
-  audio.hiss();
-}
-
 export type ScareSound = "scream" | "moan" | "sting" | "hiss";
 
 /** Plays one of the click-scare sounds, if the visitor has sound on. */
