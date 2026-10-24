@@ -1,0 +1,104 @@
+/*
+ * Halloween skin. Everything here only applies while <html> has the
+ * "halloween" class (set by the inline script in app/layout.tsx during the
+ * season), so removing the class restores the normal site.
+ */
+
+html.halloween {
+  color-scheme: dark;
+
+  --hw-bg: #0c0a0b;
+  --hw-bg-2: #1a0a0f;
+  --hw-panel: rgb(26 10 15);
+  --hw-red: #d11f2a;
+  --hw-blood: #8a0a12;
+  --hw-ember: #ff6b35;
+  --hw-text: #f3e9e4;
+
+  /* Light text on dark. "ink" is reset to dark on elements that use it as a fill (below). */
+  --color-ink: var(--hw-text);
+  --color-muted: #c9b4b0;
+  --color-faint: #9c8682;
+  --color-line: rgb(209 31 42 / 0.24);
+  --color-line-muted: rgb(209 31 42 / 0.12);
+  --color-surface: var(--hw-bg-2);
+  --color-brand-tint: rgb(209 31 42 / 0.16);
+  --color-brand-light: rgb(209 31 42 / 0.28);
+  --color-brand-dark: #ff5a6a;
+  --color-tide: #3fc1cc;
+  --color-tide-tint: rgb(14 123 134 / 0.2);
+  --color-success: #4ade80;
+  --color-success-bg: rgb(30 142 62 / 0.18);
+  --color-warning: #fbbf24;
+  --color-warning-bg: rgb(180 83 9 / 0.2);
+}
+
+html.halloween body {
+  background: var(--hw-bg);
+  color: var(--hw-text);
+}
+
+/* Cobweb texture over the whole page, very faint. */
+html.halloween body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("/halloween/cobweb.webp") center / 540px repeat;
+  opacity: 0.07;
+}
+
+html.halloween main,
+html.halloween footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Elements that use "ink" as a dark fill (phone frames, video panels) keep it dark. */
+html.halloween [class*="bg-ink"],
+html.halloween [class*="border-ink"],
+html.halloween [class*="ring-ink"] {
+  --color-ink: #0a0607;
+}
+
+/* White panels become dark, blood-tinted glass. Text marked white stays white. */
+html.halloween [class*="bg-white"] {
+  --color-white: var(--hw-panel);
+}
+html.halloween [class*="text-white"],
+html.halloween [class*="fill-white"],
+html.halloween [class*="border-white"] {
+  --color-white: #ffffff;
+}
+
+/* The light gradient backgrounds used by a few sections. */
+html.halloween [class*="#fdecea"],
+html.halloween [class*="#fff7f5"] {
+  background: linear-gradient(180deg, var(--hw-bg) 0%, var(--hw-bg-2) 55%, var(--hw-bg) 100%);
+}
+html.halloween .bg-dots {
+  opacity: 0.25;
+}
+
+/* Red buttons and accents glow like embers. */
+html.halloween .bg-brand {
+  box-shadow:
+    0 0 0 1px rgb(255 90 106 / 0.35),
+    0 0 26px rgb(209 31 42 / 0.5);
+}
+
+html.halloween header {
+  background: rgb(12 10 11 / 0.78);
+  border-color: rgb(209 31 42 / 0.25);
+}
+
+html.halloween ::selection {
+  background: rgb(209 31 42 / 0.45);
+  color: #fff;
+}
+
+/* Halloween-only pieces are hidden on the normal site. */
+html:not(.halloween) .hw-only {
+  display: none !important;
+}
